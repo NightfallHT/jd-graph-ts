@@ -8,8 +8,17 @@
 
 .container {
   display: flex;
+  flex-direction: column;
   min-width: 80vw;
   min-height: 600px;
   height: fit-content;
   box-shadow: 8px 8px 24px -3px rgba(66, 68, 90, 1);
+}
+
+.graph {
+  width: 100%;
+}
+
+.top-right-legend {
+  display: none;
 }

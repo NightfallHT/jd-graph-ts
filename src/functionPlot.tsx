@@ -9,7 +9,7 @@ width *= ratio;
 height *= ratio;
 
 functionPlot({
-    target: "#root",
+    target: "#x",
     width,
     height,
     yAxis: { domain: [-1, 9] },

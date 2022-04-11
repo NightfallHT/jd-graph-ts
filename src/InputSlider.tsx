@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
+import './App.css'
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -13,12 +14,13 @@ const Input = styled(MuiInput)`
 
 type InputSliderProps = {
     label: string;
+    update: (arg: number) => void;
 }
 
-const InputSlider = ({ label }: InputSliderProps) => {
+const InputSlider = ({ label, update }: InputSliderProps) => {
     const name = label;
     const [value, setValue] = React.useState<number | string | Array<number | string>>(
-        30,
+        0,
     );
 
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
@@ -30,12 +32,16 @@ const InputSlider = ({ label }: InputSliderProps) => {
     };
 
     const handleBlur = () => {
-        if (value < -100) {
-            setValue(-100);
-        } else if (value > 100) {
-            setValue(100);
+        if (value < -10) {
+            setValue(-10);
+        } else if (value > 10) {
+            setValue(10);
         }
     };
+
+    React.useEffect(() => {
+        update(value as number);
+    })
 
     return (
         <Box sx={{ width: 250 }}>
@@ -45,11 +51,12 @@ const InputSlider = ({ label }: InputSliderProps) => {
             <Grid container spacing={2} alignItems="center">
                 <Grid item xs>
                     <Slider
-                        min={-100}
-                        max={100}
+                        min={-10}
+                        max={10}
                         value={typeof value === 'number' ? value : 0}
                         onChange={handleSliderChange}
                         aria-labelledby="input-slider"
+                        step={0.1}
                     />
                 </Grid>
                 <Grid item>
@@ -60,9 +67,9 @@ const InputSlider = ({ label }: InputSliderProps) => {
                         onChange={handleInputChange}
                         onBlur={handleBlur}
                         inputProps={{
-                            step: 10,
-                            min: -100,
-                            max: 100,
+                            step: 0.1,
+                            min: -10,
+                            max: 10,
                             type: 'number',
                             'aria-labelledby': 'input-slider',
                         }}
