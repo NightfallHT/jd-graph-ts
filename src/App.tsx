@@ -8,6 +8,11 @@ import functionPlot from 'function-plot';
 function App() {
 
   const [coeffA, setCoeffA] = useState(0);
+  const [coeffB, setCoeffB] = useState(0);
+  const [coeffC, setCoeffC] = useState(0);
+  const [coeffD, setCoeffD] = useState(0);
+  const [coeffE, setCoeffE] = useState(0);
+  const [coeffF, setCoeffF] = useState(0);
 
   useEffect(() => {
     let width = 800;
@@ -30,12 +35,14 @@ function App() {
       grid: false,
       data: [
         {
-          fn: `(${coeffA}x^2+x)/(x^2-x)`,
+          fn: `(${coeffA}x^2+${coeffB}x+${coeffC})/(${coeffD}x^2+${coeffE}x+${coeffF})`,
           graphType: "polyline",
-          // derivative: {
-          //   fn: "2 * x",
-          //   updateOnMouseMove: true
-          // }
+          derivative: {
+            fn: `((2*${coeffA}x + ${coeffB}) * (${coeffD}x^2+${coeffE}x+${coeffF}) 
+                - (2*${coeffD}x + ${coeffE}) * (${coeffA}x^2+${coeffB}x+${coeffC}))
+                /((${coeffD}x^2+${coeffE}x+${coeffF})^2)`,
+            updateOnMouseMove: true
+          }
         }
       ]
     });
@@ -51,6 +58,11 @@ function App() {
           </div>
           <div className='sliders'>
             <InputSlider label='a' update={setCoeffA} />
+            <InputSlider label='b' update={setCoeffB} />
+            <InputSlider label='c' update={setCoeffC} />
+            <InputSlider label='d' update={setCoeffD} />
+            <InputSlider label='e' update={setCoeffE} />
+            <InputSlider label='f' update={setCoeffF} />
           </div>
           <div className='solutions'>
           </div>
