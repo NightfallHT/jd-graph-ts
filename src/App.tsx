@@ -6,14 +6,17 @@ import InputSlider from './InputSlider';
 import functionPlot from 'function-plot';
 
 function App() {
-
-  const [coeffA, setCoeffA] = useState(0);
-  const [coeffB, setCoeffB] = useState(0);
-  const [coeffC, setCoeffC] = useState(0);
-  const [coeffD, setCoeffD] = useState(0);
-  const [coeffE, setCoeffE] = useState(0);
-  const [coeffF, setCoeffF] = useState(0);
-
+  function getRandomInt(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+  const [coeffA, setCoeffA] = useState(getRandomInt(-100, 100) / 10);
+  const [coeffB, setCoeffB] = useState(getRandomInt(-100, 100) / 10);
+  const [coeffC, setCoeffC] = useState(getRandomInt(-100, 100) / 10);
+  const [coeffD, setCoeffD] = useState(getRandomInt(-100, 100) / 10);
+  const [coeffE, setCoeffE] = useState(getRandomInt(-100, 100) / 10);
+  const [coeffF, setCoeffF] = useState(getRandomInt(-100, 100) / 10);
   useEffect(() => {
     let width = 800;
     let height = 800;
@@ -22,9 +25,6 @@ function App() {
     // let ratio = contentsBounds.width / width;
     // width *= ratio;
     // height *= ratio;
-
-    let c = 0;
-
     functionPlot({
       target: "#x",
       width,
@@ -57,14 +57,18 @@ function App() {
 
           </div>
           <div className='sliders'>
-            <InputSlider label='a' update={setCoeffA} />
-            <InputSlider label='b' update={setCoeffB} />
-            <InputSlider label='c' update={setCoeffC} />
-            <InputSlider label='d' update={setCoeffD} />
-            <InputSlider label='e' update={setCoeffE} />
-            <InputSlider label='f' update={setCoeffF} />
+            <InputSlider label='a' update={setCoeffA} initval={coeffA} />
+            <InputSlider label='b' update={setCoeffB} initval={coeffB} />
+            <InputSlider label='c' update={setCoeffC} initval={coeffC} />
+            <InputSlider label='d' update={setCoeffD} initval={coeffD} />
+            <InputSlider label='e' update={setCoeffE} initval={coeffE} />
+            <InputSlider label='f' update={setCoeffF} initval={coeffF} />
           </div>
+          {/* <button onClick={() => { setCoeffA(0) }}>Reset</button> */}
           <div className='solutions'>
+            <div>
+              domain
+            </div>
           </div>
         </div>
       </div>

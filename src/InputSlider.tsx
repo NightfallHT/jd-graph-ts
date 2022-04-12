@@ -14,13 +14,14 @@ const Input = styled(MuiInput)`
 
 type InputSliderProps = {
     label: string;
+    initval: number;
     update: (arg: number) => void;
 }
 
-const InputSlider = ({ label, update }: InputSliderProps) => {
+const InputSlider = ({ label, update, initval }: InputSliderProps) => {
     const name = label;
     const [value, setValue] = React.useState<number | string | Array<number | string>>(
-        0,
+        initval,
     );
 
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
