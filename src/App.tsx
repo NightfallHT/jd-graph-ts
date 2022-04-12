@@ -29,8 +29,8 @@ function App() {
       target: "#x",
       width,
       height,
-      yAxis: { domain: [-20, 20] },
-      xAxis: { domain: [-20, 20] },
+      yAxis: { domain: [-200, 200] },
+      xAxis: { domain: [-200, 200] },
       disableZoom: true,
       grid: false,
       data: [
