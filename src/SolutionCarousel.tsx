@@ -1,37 +1,34 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { Paper, Button } from '@mui/material'
+import solutionArray from './SolutionArray';
+import Latex from 'react-latex';
 
-// function Example(props) {
-//     var items = [
-//         {
-//             name: "Random Name #1",
-//             description: "Probably the most random thing you have ever seen!"
-//         },
-//         {
-//             name: "Random Name #2",
-//             description: "Hello World!"
-//         }
-//     ]
+export interface ItemProps {
+    // id: number;
+    header: string;
+    explanation: string;
+    solution: string[];
+}
+interface CarouselProps {
+    itemArr: ItemProps[];
+}
+export default function SolutionCarousel(props: CarouselProps) {
+    return (
+        <Carousel>
+            {
+                props.itemArr.map((item, i) => <Item key={i} header={item.header} explanation={item.explanation} solution={item.solution} />)
+            }
+        </Carousel>
+    )
+}
 
-//     return (
-//         <Carousel>
-//             {
-//                 items.map((item, i) => <Item key={i} item={item} />)
-//             }
-//         </Carousel>
-//     )
-// }
-
-// function Item(props) {
-//     return (
-//         <Paper>
-//             <h2>{props.item.name}</h2>
-//             <p>{props.item.description}</p>
-
-//             <Button className="CheckButton">
-//                 Check it out!
-//             </Button>
-//         </Paper>
-//     )
-// }
+function Item(props: ItemProps) {
+    return (
+        <Paper>
+            <h2>{props.header}</h2>
+            <p>{props.explanation}</p>
+            {props.solution.map((item, i) => <div key={i}> <Latex>{item}</Latex> <br></br></div>)}
+        </Paper>
+    )
+}

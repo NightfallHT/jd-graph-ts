@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import InputSlider from './InputSlider';
-// import functionPlot from './FunctionPlot';
-
 import functionPlot from 'function-plot';
+import SolutionCarousel from './SolutionCarousel';
+import solutionArray from './SolutionArray';
 
 function App() {
   function getRandomInt(min: number, max: number): number {
@@ -66,9 +66,7 @@ function App() {
           </div>
           {/* <button onClick={() => { setCoeffA(0) }}>Reset</button> */}
           <div className='solutions'>
-            <div>
-              domain
-            </div>
+            <SolutionCarousel itemArr={solutionArray(coeffA, coeffB, coeffC, coeffD, coeffE, coeffF)} />
           </div>
         </div>
       </div>

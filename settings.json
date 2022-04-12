@@ -1,0 +1,8 @@
+{
+    "[typescript]": {
+        "editor.tabsize": 2
+    },
+    "[typescriptreact]": {
+        "editor.tabsize": 2
+    }
+}
