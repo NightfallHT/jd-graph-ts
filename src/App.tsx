@@ -52,14 +52,16 @@ function App() {
     <>
       <div className="main">
         <div className="container">
-          <div id="x" className="graph"></div>
-          <div className="sliders">
-            <InputSlider label="a" update={setCoeffA} initval={coeffA} />
-            <InputSlider label="b" update={setCoeffB} initval={coeffB} />
-            <InputSlider label="c" update={setCoeffC} initval={coeffC} />
-            <InputSlider label="d" update={setCoeffD} initval={coeffD} />
-            <InputSlider label="e" update={setCoeffE} initval={coeffE} />
-            <InputSlider label="f" update={setCoeffF} initval={coeffF} />
+          <div className="graph-wrapper">
+            <div id="x" className="graph"></div>
+            <div className="sliders">
+              <InputSlider label="a" update={setCoeffA} initval={coeffA} />
+              <InputSlider label="b" update={setCoeffB} initval={coeffB} />
+              <InputSlider label="c" update={setCoeffC} initval={coeffC} />
+              <InputSlider label="d" update={setCoeffD} initval={coeffD} />
+              <InputSlider label="e" update={setCoeffE} initval={coeffE} />
+              <InputSlider label="f" update={setCoeffF} initval={coeffF} />
+            </div>
           </div>
           {/* <button onClick={() => { setCoeffA(0) }}>Reset</button> */}
           <div className="solutions">

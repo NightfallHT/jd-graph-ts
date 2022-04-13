@@ -29,8 +29,7 @@ const solutionArray = (
       return [`$\\Delta < 0 \\Rightarrow  x _0 \\in \\varnothing$`];
     if (delta === 0)
       return [
-        `$\\Delta = 0 \\Rightarrow \\\\ x = \\frac{-b}{2a} \\ x = ${
-          (-b / 2) * a
+        `$\\Delta = 0 \\Rightarrow \\\\ x = \\frac{-b}{2a} \\ x = ${(-b / 2) * a
         }$`,
       ];
     else
@@ -44,8 +43,7 @@ const solutionArray = (
           b,
           "-"
         )} - \\sqrt{${delta}}}{2\\cdot ${a}}$`,
-        `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${
-          (-b + Math.sqrt(delta)) / (2 * a)
+        `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${(-b + Math.sqrt(delta)) / (2 * a)
         }$`,
       ];
   }
@@ -76,44 +74,45 @@ const solutionArray = (
   function limit() {
     if (deltaDen > 0) {
       return [
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} = ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^-} = ${
-          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^-} = ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^+} = ${
-          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^+} = ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
       ];
     } else if (deltaDen === 0) {
       return [
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} = ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
       ];
     }
     return [" "];
   }
   return [
+    {
+      header: "find out the solution with our super duper meth calculator",
+      explanation: "you can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
+      solution: [
+        "just press the arrows you dumbfuck"
+      ],
+    },
     {
       header: "step 1 - find the domain",
       explanation: "find xs where the denominator = 0",
@@ -174,10 +173,9 @@ const solutionArray = (
         ...checkEvenness(a, b, c, "g"),
         "check whether the denominator is even:",
         ...checkEvenness(d, e, f, "h"),
-        `the function is ${
-          b === 0 && e === 0
-            ? "even, because both the nominator and the denominator are even"
-            : "not even, because the nominator or the denominator or both are not even "
+        `the function is ${b === 0 && e === 0
+          ? "even, because both the nominator and the denominator are even"
+          : "not even, because the nominator or the denominator or both are not even "
         }`,
       ],
     },
