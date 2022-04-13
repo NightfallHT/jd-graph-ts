@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .container {
@@ -24,13 +25,13 @@
   display: none;
 }
 
-.katex-display>.katex {
-  white-space: normal
+.katex-display > .katex {
+  white-space: normal;
 }
 
 /* Add space between broken lines: */
-.katex-display>.base {
-  margin: 0.25em 0
+.katex-display > .base {
+  margin: 0.25em 0;
 }
 
 /* Compensate by reducing space around display math */
@@ -38,7 +39,7 @@
   margin: 0.5em 0;
 }
 
-.MuiPaper-root>* {
+.MuiPaper-root > * {
   display: flex;
   justify-content: center;
 }

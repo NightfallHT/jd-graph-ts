@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import InputSlider from './InputSlider';
-import functionPlot from 'function-plot';
-import SolutionCarousel from './SolutionCarousel';
-import solutionArray from './SolutionArray';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import InputSlider from "./InputSlider";
+import functionPlot from "function-plot";
+import SolutionCarousel from "./SolutionCarousel";
+import solutionArray from "./SolutionArray";
 
 function App() {
   function getRandomInt(min: number, max: number): number {
@@ -41,32 +41,38 @@ function App() {
             fn: `((2*${coeffA}x + ${coeffB}) * (${coeffD}x^2+${coeffE}x+${coeffF}) 
                 - (2*${coeffD}x + ${coeffE}) * (${coeffA}x^2+${coeffB}x+${coeffC}))
                 /((${coeffD}x^2+${coeffE}x+${coeffF})^2)`,
-            updateOnMouseMove: true
-          }
-        }
-      ]
+            updateOnMouseMove: true,
+          },
+        },
+      ],
     });
-
-  })
+  });
 
   return (
     <>
-      <div className='main'>
-        <div className='container'>
-          <div id='x' className='graph'>
-
-          </div>
-          <div className='sliders'>
-            <InputSlider label='a' update={setCoeffA} initval={coeffA} />
-            <InputSlider label='b' update={setCoeffB} initval={coeffB} />
-            <InputSlider label='c' update={setCoeffC} initval={coeffC} />
-            <InputSlider label='d' update={setCoeffD} initval={coeffD} />
-            <InputSlider label='e' update={setCoeffE} initval={coeffE} />
-            <InputSlider label='f' update={setCoeffF} initval={coeffF} />
+      <div className="main">
+        <div className="container">
+          <div id="x" className="graph"></div>
+          <div className="sliders">
+            <InputSlider label="a" update={setCoeffA} initval={coeffA} />
+            <InputSlider label="b" update={setCoeffB} initval={coeffB} />
+            <InputSlider label="c" update={setCoeffC} initval={coeffC} />
+            <InputSlider label="d" update={setCoeffD} initval={coeffD} />
+            <InputSlider label="e" update={setCoeffE} initval={coeffE} />
+            <InputSlider label="f" update={setCoeffF} initval={coeffF} />
           </div>
           {/* <button onClick={() => { setCoeffA(0) }}>Reset</button> */}
-          <div className='solutions'>
-            <SolutionCarousel itemArr={solutionArray(coeffA, coeffB, coeffC, coeffD, coeffE, coeffF)} />
+          <div className="solutions">
+            <SolutionCarousel
+              itemArr={solutionArray(
+                coeffA,
+                coeffB,
+                coeffC,
+                coeffD,
+                coeffE,
+                coeffF
+              )}
+            />
           </div>
         </div>
       </div>
