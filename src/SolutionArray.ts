@@ -1,5 +1,5 @@
 import { ItemProps } from "./SolutionCarousel";
-import derivative from 'function-plot'
+import derivative from "function-plot";
 
 const solutionArray = (
   a: number,
@@ -30,7 +30,8 @@ const solutionArray = (
       return [`$\\Delta < 0 \\Rightarrow  x _0 \\in \\varnothing$`];
     if (delta === 0)
       return [
-        `$\\Delta = 0 \\Rightarrow \\\\ x = \\frac{-b}{2a} \\ x = ${(-b / 2) * a
+        `$\\Delta = 0 \\Rightarrow \\\\ x = \\frac{-b}{2a} \\ x = ${
+          (-b / 2) * a
         }$`,
       ];
     else
@@ -44,7 +45,8 @@ const solutionArray = (
           b,
           "-"
         )} - \\sqrt{${delta}}}{2\\cdot ${a}}$`,
-        `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${(-b + Math.sqrt(delta)) / (2 * a)
+        `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${
+          (-b + Math.sqrt(delta)) / (2 * a)
         }$`,
       ];
   }
@@ -74,51 +76,97 @@ const solutionArray = (
   function limit() {
     if (deltaDen > 0) {
       return [
-        "the limits around the point(s) excluded from the domain",
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-          ? "\\infin"
-          : "-\\infin"
+        "the limits around the point(s) excluded from the domain:",
+        "to calculate them we need to find from which direction the zero in the denominator is approached,",
+        "and what is the sign the numerator takes at where the denominator equals zero",
+        `$\\lim\\limits_{x \\rightarrow ${
+          solutionsDen[0]
+        }^-} \\stackrel{[\\frac{${
+          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+            ? "+"
+            : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
+          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+            ? "\\infin"
+            : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
-          ? "\\infin"
-          : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} 
+        \\stackrel{[\\frac{${
+          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+            ? "+"
+            : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
+          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
+            ? "\\infin"
+            : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^-} = ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
-          ? "\\infin"
-          : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^-}
+        \\stackrel{[\\frac{${
+          a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
+            ? "+"
+            : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
+          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
+            ? "\\infin"
+            : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^+} = ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
-          ? "\\infin"
-          : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^+} 
+        \\stackrel{[\\frac{${
+          a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
+            ? "+"
+            : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
+          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
+            ? "\\infin"
+            : "-\\infin"
         }$`,
       ];
     } else if (deltaDen === 0) {
       return [
         "the limits around the point(s) excluded from the domain",
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-          ? "\\infin"
-          : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-}
+        \\stackrel{[\\frac{${
+          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+            ? "+"
+            : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
+          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+            ? "\\infin"
+            : "-\\infin"
         }$`,
-        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-          ? "\\infin"
-          : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+}
+        \\stackrel{[\\frac{${
+          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+            ? "+"
+            : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
+          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+            ? "\\infin"
+            : "-\\infin"
         }$`,
       ];
     }
-    return ["there are no vertical asymptotes, since the denominator is never equal to zero"];
+    return [
+      "there are no vertical asymptotes, since the denominator is never equal to zero",
+    ];
   }
-  const derivative = (a: number, b: number, c: number, d: number, e: number, f: number) => {
+  const derivative = (
+    a: number,
+    b: number,
+    c: number,
+    d: number,
+    e: number,
+    f: number
+  ) => {
     //no idea im so fucking tired
-  }
-
+  };
 
   return [
     {
       header: "find out the solution with our super duper meth calculator",
-      explanation: "you can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
-      solution: [
-        "just press the arrows you dumbfuck"
-      ],
+      explanation:
+        "you can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
+      solution: ["just press the arrows you dumbfuck"],
     },
     {
       header: "step 1 - find the domain",
@@ -175,14 +223,26 @@ const solutionArray = (
       header: "step 4 - check for evenness of the function",
       explanation: "check whether f(x) = f(-x)",
       solution: [
-        "$ \\frac{ax^2 + bx + c}{dx^2 + ex + f} = \\frac{g(x)}{h(x)}$",
+        "$ f(x) =\\frac{ax^2 + bx + c}{dx^2 + ex + f} = \\frac{g(x)}{h(x)}$",
+        " a quadratic function is even if and only if the middle term is equal to zero, because",
+        "$ax^2 + bx + c = a(-x)^2 + b(-x) + c$",
+        " only holds if b = 0",
         "check whether the numerator is even:",
-        ...checkEvenness(a, b, c, "g"),
+        `${
+          b === 0
+            ? "$ b = 0 \\iff g \\ is \\  even$"
+            : "$b \\neq 0 \\iff g \\ isn't \\ even$"
+        }`,
         "check whether the denominator is even:",
-        ...checkEvenness(d, e, f, "h"),
-        `the function is ${b === 0 && e === 0
-          ? "even, because both the nominator and the denominator are even"
-          : "not even, because the nominator or the denominator or both are not even "
+        `${
+          e === 0
+            ? "$e = 0 \\iff h \\ is \\  even$"
+            : "$e \\neq 0 \\iff h \\ isn't \\ even$"
+        }`,
+        `the function is ${
+          b === 0 && e === 0
+            ? "even, because both the nominator and the denominator are even"
+            : "not even, because the nominator or the denominator or both are not even "
         }`,
       ],
     },
@@ -192,7 +252,11 @@ const solutionArray = (
         "calculate the limits at infinity and at the point where the denominator equals zero",
       solution: [
         "the limits at infinity:",
-        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} = ${a / d}$`,
+        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{ax^2 + bx + c}{dx^2 + ex + f} = $`,
+        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{x(a + \\frac{b}{x} + \\frac{c}{x^2})}{x(d + \\frac{e}{x} + \\frac{f}{x^2})} = $`,
+        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{a + \\frac{b}{x} + \\frac{c}{x^2}}{d + \\frac{e}{x} + \\frac{f}{x^2}} =\\frac{a}{d} = ${
+          a / d
+        } $`,
         ...limit(),
       ],
     },
@@ -207,38 +271,37 @@ const solutionArray = (
         "(spoiler, we did that in step 1)",
         ...rootsOfQuadratic(d, e, f),
         "slant asymptotes exist only when the polynomial in the nominator is of a higher degree than the denominator",
-        "since the assignment specifically said a =/= 0 and d =/= 0, this rule is never satisfied, therefore there is no such asymptote"
+        "since the assignment specifically said a =/= 0 and d =/= 0, this rule is never satisfied, therefore there is no such asymptote",
       ],
-    }, {
+    },
+    {
       header: "step 7 - determine the monotonicity",
       explanation:
         "function is increasing when the derivative is greater than 0 and decreasing when it's less than 0",
       solution: [
         "find the derivative",
-        "determine whether the derivative changes sign (crosses the X axis)"
+        "determine whether the derivative changes sign (crosses the X axis)",
       ],
-    }, {
+    },
+    {
       header: "step 8 - find the extremes",
-      explanation:
-        "extremes are where the derivative crosses 0",
+      explanation: "extremes are where the derivative crosses 0",
       solution: [
         "find the derivative",
-        "determine where the derivative changes sign (crosses the X axis)"
+        "determine where the derivative changes sign (crosses the X axis)",
       ],
-    }, {
+    },
+    {
       header: "step 9 - draw a table of ranges and monotonocinicity",
       explanation:
         "table. take limits, asymptotes and derivatives and just fill it in idk.",
-      solution: [
-        "draw table",
-      ],
-    }, {
+      solution: ["draw table"],
+    },
+    {
       header: "step 10 - determine the set of values",
       explanation:
         "just like. global extremes. top and bottom. also try to find out whether you have any gaps in the middle",
-      solution: [
-        "why am i doing this",
-      ],
+      solution: ["why am i doing this"],
     },
   ] as ItemProps[];
 };
