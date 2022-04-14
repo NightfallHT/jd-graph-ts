@@ -59,20 +59,6 @@ const solutionArray = (
         `$x \\in \\mathbb{R} \\setminus \\{ ${solutionsDen[0]} , ${solutionsDen[1]}\\}$`,
       ];
   }
-  function checkEvenness(
-    a: number,
-    b: number,
-    c: number,
-    name: string
-  ): string[] {
-    if (b !== 0) {
-      return [`${name} isn't even beacuse`, `$ ${name}(x) \\ne ${name}(-x)$`];
-    }
-    return [
-      `${name} is even, because the middle coefficient is equal to zero, because:`,
-      "$a(-x)^2 + c = ax^2 + c$",
-    ];
-  }
   function limit() {
     if (deltaDen > 0) {
       return [
