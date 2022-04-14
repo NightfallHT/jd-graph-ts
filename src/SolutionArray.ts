@@ -1,4 +1,5 @@
 import { ItemProps } from "./SolutionCarousel";
+import derivative from 'function-plot'
 
 const solutionArray = (
   a: number,
@@ -47,7 +48,6 @@ const solutionArray = (
         }$`,
       ];
   }
-
   function findDomain(delta: number): string[] {
     if (delta < 0) return [`$x \\in \\mathbb{R}$`];
     if (delta === 0)
@@ -74,6 +74,7 @@ const solutionArray = (
   function limit() {
     if (deltaDen > 0) {
       return [
+        "the limits around the point(s) excluded from the domain",
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
           ? "\\infin"
           : "-\\infin"
@@ -93,6 +94,7 @@ const solutionArray = (
       ];
     } else if (deltaDen === 0) {
       return [
+        "the limits around the point(s) excluded from the domain",
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-} = ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
           ? "\\infin"
           : "-\\infin"
@@ -103,8 +105,13 @@ const solutionArray = (
         }$`,
       ];
     }
-    return [" "];
+    return ["there are no vertical asymptotes, since the denominator is never equal to zero"];
   }
+  const derivative = (a: number, b: number, c: number, d: number, e: number, f: number) => {
+    //no idea im so fucking tired
+  }
+
+
   return [
     {
       header: "find out the solution with our super duper meth calculator",
@@ -186,8 +193,51 @@ const solutionArray = (
       solution: [
         "the limits at infinity:",
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} = ${a / d}$`,
-        "the limits around the point(s) excluded from the domain",
         ...limit(),
+      ],
+    },
+    {
+      header: "step 6 - find the asymptotes",
+      explanation:
+        "check for the existence of horizontal, vertical and slant asymptotes",
+      solution: [
+        "the limits at infinity are the horizontal asymptotes:",
+        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} = ${a / d}$`,
+        "vertical asymptotes are the points where y -> infinity, or simply the roots of the denominator",
+        "(spoiler, we did that in step 1)",
+        ...rootsOfQuadratic(d, e, f),
+        "slant asymptotes exist only when the polynomial in the nominator is of a higher degree than the denominator",
+        "since the assignment specifically said a =/= 0 and d =/= 0, this rule is never satisfied, therefore there is no such asymptote"
+      ],
+    }, {
+      header: "step 7 - determine the monotonicity",
+      explanation:
+        "function is increasing when the derivative is greater than 0 and decreasing when it's less than 0",
+      solution: [
+        "find the derivative",
+        "determine whether the derivative changes sign (crosses the X axis)"
+      ],
+    }, {
+      header: "step 8 - find the extremes",
+      explanation:
+        "extremes are where the derivative crosses 0",
+      solution: [
+        "find the derivative",
+        "determine where the derivative changes sign (crosses the X axis)"
+      ],
+    }, {
+      header: "step 9 - draw a table of ranges and monotonocinicity",
+      explanation:
+        "table. take limits, asymptotes and derivatives and just fill it in idk.",
+      solution: [
+        "draw table",
+      ],
+    }, {
+      header: "step 10 - determine the set of values",
+      explanation:
+        "just like. global extremes. top and bottom. also try to find out whether you have any gaps in the middle",
+      solution: [
+        "why am i doing this",
       ],
     },
   ] as ItemProps[];
