@@ -215,6 +215,15 @@ const solutionArray = (
         "function is increasing when the derivative is greater than 0 and decreasing when it's less than 0",
       solution: [
         "find the derivative",
+        `$\\frac{d}{dx} \\frac{f(x)}{g(x)} = \\frac{\\frac{d}{dx} f(x) \\cdot g(x) - f(x) \\cdot \\frac{d}{dx} g(x)}{g(x)^2}$`,
+        "let's treat our nominator and denominator as two separate functions",
+        `$f(x) = ax^2 + bx + c, g(x) = dx^2 + ex + f$`,
+
+        `$\\frac{d}{dx} f(x) = \\frac{(2ax + b) \\cdot (dx^2 + ex + f) - (ax^2 + bx + c) \\cdot (2dx + e)}{g(x)^2}$`,
+        "since the denominator is always greater than 0 we can just ignore it",
+        "so to determine whether and where it crosses 0 we just take the roots of the nominator",
+        // `$(${2 * a}x ${signedCoef(b, '+')}) \\cdot ${d}^2 ${signedCoef(e, '+')}x ${signedCoef(f, '+')} ${signedCoef(a, '-')}x^2 ${signedCoef(b, '+')}x ${signedCoef(c, '+')} \\cdot (${2 * d}x ${signedCoef(e, '+')})$`,
+        `$(2ax + b) \\cdot (dx^2 + ex + f) - (ax^2 + bx + c) \\cdot (2dx + e)$`,
         "determine whether the derivative changes sign (crosses the X axis)"
       ],
     }, {
