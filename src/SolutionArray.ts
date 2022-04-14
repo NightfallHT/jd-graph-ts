@@ -1,5 +1,6 @@
 import { ItemProps } from "./SolutionCarousel";
 import derivative from "function-plot";
+import { re } from "mathjs";
 
 const solutionArray = (
   a: number,
@@ -11,15 +12,30 @@ const solutionArray = (
 ) => {
   const deltaNum = Math.pow(b, 2) - 4 * a * c;
   const deltaDen = Math.pow(e, 2) - 4 * d * f;
+  const deltaDerivativeNum =
+    Math.pow(2 * (a * f - c * d), 2) - 4 * (a * e - b * d) * (b * f - e * c);
   const solutionsDen = [
     (-e + Math.sqrt(deltaDen)) / (2 * d),
     (-e - Math.sqrt(deltaDen)) / (2 * d),
   ];
-  solutionsDen.sort();
-
+  solutionsDen.sort((a: number, b: number) => a - b);
+  const solutionsDerivativeNumGen = () => {
+    if (a * e - b * d !== 0) {
+      return [
+        (-2 * (a * f - c * d) + Math.sqrt(deltaDerivativeNum)) /
+          (2 * (a * e - b * d)),
+        (-2 * (a * f - c * d) - Math.sqrt(deltaDerivativeNum)) /
+          (2 * (a * e - b * d)),
+      ];
+    } else {
+      return [-(b * f - e * c) / (2 * (a * f - c * d))];
+    }
+  };
+  const solutionsDerivativeNum = solutionsDerivativeNumGen();
+  solutionsDerivativeNum.sort((a: number, b: number) => a - b);
   function signedCoef(coef: number, op: string) {
     if ((op === "-" && coef < 0) || (op === "+" && coef >= 0))
-      return `+ ${coef}`;
+      return `+ ${Math.abs(coef)}`;
     if (op === "-" && coef === 0) return "- 0";
     return `${coef}`;
   }
@@ -38,13 +54,7 @@ const solutionArray = (
       return [
         `$\\Delta > 0 \\Rightarrow$`,
         `$\\ x = \\frac{-b\\pm \\sqrt{\\Delta}}{2*a}$`,
-        `$\\ x = \\frac{${signedCoef(
-          b,
-          "-"
-        )} + \\sqrt{${delta}}}{2\\cdot ${a}}\\vee x = \\frac{${signedCoef(
-          b,
-          "-"
-        )} - \\sqrt{${delta}}}{2\\cdot ${a}}$`,
+        `$\\ x = \\frac{${-b} + \\sqrt{${delta}}}{2\\cdot ${a}}\\vee x = \\frac{${-b} - \\sqrt{${delta}}}{2\\cdot ${a}}$`,
         `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${
           (-b + Math.sqrt(delta)) / (2 * a)
         }$`,
@@ -109,7 +119,7 @@ const solutionArray = (
       ];
     } else if (deltaDen === 0) {
       return [
-        "the limits around the point(s) excluded from the domain",
+        "the limits around the point(s) excluded from the domain:",
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-}
         \\stackrel{[\\frac{${
           a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
@@ -125,7 +135,7 @@ const solutionArray = (
           a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
             ? "+"
             : "-"
-        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
           (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
             ? "\\infin"
             : "-\\infin"
@@ -134,6 +144,104 @@ const solutionArray = (
     }
     return [
       "there are no vertical asymptotes, since the denominator is never equal to zero",
+    ];
+  }
+  function monotonicity() {
+    if (deltaDerivativeNum <= 0) {
+      if (a * e - b * d > 0) {
+        if (deltaDen < 0) {
+          return ["$f\\nearrow \\reals$"];
+        } else if (deltaDen === 0) {
+          return [
+            `$f\\nearrow (-\\infty ,${solutionsDen[0]}), (${solutionsDen[0]},\\infty)$`,
+          ];
+        } else {
+          return [
+            `$f \\nearrow (-\\infty,${solutionsDen[0]}), (${solutionsDen[0]},${solutionsDen[1]}), (${solutionsDen[1]}, \\infty)$`,
+          ];
+        }
+      } else {
+        if (deltaDen < 0) {
+          return ["$f\\searrow \\reals$"];
+        } else if (deltaDen === 0) {
+          return [
+            `$f\\searrow (-\\infty ,${solutionsDen[0]}), (${solutionsDen[0]},\\infty)$`,
+          ];
+        } else {
+          return [
+            `$f \\searrow (-\\infty,${solutionsDen[0]}), (${solutionsDen[0]},${solutionsDen[1]}), (${solutionsDen[1]}, \\infty)$`,
+          ];
+        }
+      }
+    } else if (deltaDerivativeNum > 0) {
+      if (a * e - b * d > 0) {
+        if (deltaDen < 0) {
+          return [
+            `$f\\nearrow (-\\infty, ${solutionsDerivativeNum[0]}), (${solutionsDerivativeNum[1]}, \\infty)$`,
+            `$f\\searrow (${solutionsDerivativeNum[0]}, ${solutionsDerivativeNum[1]})$`,
+          ];
+        } else if (deltaDen === 0) {
+          return [
+            `$f\\nearrow (-\\infty, ${Math.min(
+              solutionsDerivativeNum[0],
+              solutionsDen[0]
+            )}), (${solutionsDen[1]}, \\infty$`,
+            `$f\\nearrow (${Math.max(
+              solutionsDerivativeNum[0],
+              solutionsDen[0]
+            )}, ${solutionsDerivativeNum[1]})$`,
+          ];
+        } else {
+          return [
+            `$f\\nearrow (-\\infty, ${Math.min(
+              solutionsDen[0],
+              solutionsDerivativeNum[0]
+            )}), (${Math.min(
+              solutionsDen[0],
+              solutionsDerivativeNum[0]
+            )},${Math.max(solutionsDen[0], solutionsDerivativeNum[0])})$`,
+            `$\\searrow(${Math.max(
+              solutionsDen[0],
+              solutionsDerivativeNum[0]
+            )}, ${Math.min(
+              solutionsDen[1],
+              solutionsDerivativeNum[1]
+            )} ),(${Math.min(
+              solutionsDen[1],
+              solutionsDerivativeNum[1]
+            )}, -\\infty)$`,
+          ];
+        }
+      } else {
+        return [
+          `f$\\nearrow (${solutionsDerivativeNum[0]}, ${solutionsDerivativeNum[1]})$`,
+          `f$\\searrow (-\\infty, ${solutionsDerivativeNum[0]}), (${solutionsDerivativeNum[1]}, \\infty)$`,
+        ]; //TODO: Add all the missing cases (I'm fucking tired)
+      }
+    }
+    return ["dupa"];
+  }
+  function extremes(): string[] {
+    const solveDerivative = () => {
+      if (deltaDerivativeNum <= 0) {
+        return [
+          "$\\Delta \\leq 0 \\Rightarrow$ no extremes",
+          ...monotonicity(),
+        ];
+      } else {
+        /*return rootsOfQuadratic(
+          a * e - b * d,
+          2 * (a * f - c * d),
+          b * f - e * c
+        );
+        */
+        return ["$\\Delta \\geq 0 \\Rightarrow$ 2 extremes", ...monotonicity()];
+      }
+    };
+    return [
+      "first we find the delta:",
+      `$\\Delta = b^2 - 4ac = ${deltaDerivativeNum}$`,
+      ...solveDerivative(),
     ];
   }
   const derivative = (
@@ -200,7 +308,7 @@ const solutionArray = (
           "+"
         )} \\ \\cdot \\ 0 ${signedCoef(f, "+")}}$`,
         "2: cancel the 0's",
-        `$f(0)=\\frac{${signedCoef(c, "+")}}{ ${signedCoef(f, "+")}}$`,
+        `$f(0)=\\frac{${c}}{ ${f}}$`,
         "3: solve",
         `$f(0)=${c / f}$`,
       ],
@@ -227,8 +335,8 @@ const solutionArray = (
         }`,
         `the function is ${
           b === 0 && e === 0
-            ? "even, because both the nominator and the denominator are even"
-            : "not even, because the nominator or the denominator or both are not even "
+            ? "even, because both the numerator and the denominator are even"
+            : "not even, because the numerator or the denominator or both are not even "
         }`,
       ],
     },
@@ -256,8 +364,8 @@ const solutionArray = (
         "vertical asymptotes are the points where y -> infinity, or simply the roots of the denominator",
         "(spoiler, we did that in step 1)",
         ...rootsOfQuadratic(d, e, f),
-        "slant asymptotes exist only when the polynomial in the nominator is of a higher degree than the denominator",
-        "since the assignment specifically said a =/= 0 and d =/= 0, this rule is never satisfied, therefore there is no such asymptote",
+        "slant asymptotes exist only when the polynomial in the numerator is of a higher degree than the denominator",
+        "since the assignment specifically said $a \\neq 0$ and $d \\neq 0$, this rule is never satisfied, therefore there is no such asymptote",
       ],
     },
     {
@@ -267,15 +375,23 @@ const solutionArray = (
       solution: [
         "find the derivative",
         `$\\frac{d}{dx} \\frac{f(x)}{g(x)} = \\frac{\\frac{d}{dx} f(x) \\cdot g(x) - f(x) \\cdot \\frac{d}{dx} g(x)}{g(x)^2}$`,
-        "let's treat our nominator and denominator as two separate functions",
+        "let's treat our numerator and denominator as two separate functions",
         `$f(x) = ax^2 + bx + c, g(x) = dx^2 + ex + f$`,
 
         `$\\frac{d}{dx} f(x) = \\frac{(2ax + b) \\cdot (dx^2 + ex + f) - (ax^2 + bx + c) \\cdot (2dx + e)}{g(x)^2}$`,
         "since the denominator is always greater than 0 we can just ignore it",
-        "so to determine whether and where it crosses 0 we just take the roots of the nominator",
+        "so to determine whether and where it crosses 0 we just take the roots of the numerator",
         // `$(${2 * a}x ${signedCoef(b, '+')}) \\cdot ${d}^2 ${signedCoef(e, '+')}x ${signedCoef(f, '+')} ${signedCoef(a, '-')}x^2 ${signedCoef(b, '+')}x ${signedCoef(c, '+')} \\cdot (${2 * d}x ${signedCoef(e, '+')})$`,
         `$(2ax + b) \\cdot (dx^2 + ex + f) - (ax^2 + bx + c) \\cdot (2dx + e)$`,
+        "which can be rewritten as ",
+        "$(ae-bd)x^2 + 2(af - cd)x + bf - ec$",
+        "which is just a quadratic into which we can substitue our coefficients, resulting in:",
+        `$${a * e - b * d}x^2 ${signedCoef(
+          2 * (a * f - c * d),
+          "+"
+        )}x ${signedCoef(b * f - e * c, "+")}$`,
         "determine whether the derivative changes sign (crosses the X axis)",
+        ...extremes(),
       ],
     },
     {
