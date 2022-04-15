@@ -7,6 +7,7 @@ import solutionArray from "./SolutionArray";
 import Latex from "react-latex";
 import Button from '@mui/material/Button';
 import Settings, { SimpleDialogProps } from "./Settings";
+import { derivative } from "mathjs";
 
 function App() {
   function getRandomInt(min: number, max: number): number {
@@ -21,11 +22,12 @@ function App() {
     return `${coef}`;
   }
   function handleDialogUpdate(props: Omit<SimpleDialogProps, 'open' | 'onClose'>): void {
-    setRadioValue(props.radioValue);
-    setRangeSliderVal(props.rangeSliderVal);
-    setCheckedZoom(props.checkedZoom);
-    setCheckedDerivative(props.checkedDerivative);
-    setCheckedGrid(props.checkedGrid)
+    setRadioValue(props.defaultStep);
+    setRangeSliderVal(props.defaultRange);
+    setCheckedZoom(props.defaultZoom);
+    setCheckedDerivative();
+    setCheckedGrid(props.defaultGrid)
+    setOpen(false);
   }
 
   const [coeffA, setCoeffA] = useState(getRandomInt(-100, 100) / 10);
@@ -34,11 +36,12 @@ function App() {
   const [coeffD, setCoeffD] = useState(getRandomInt(-100, 100) / 10);
   const [coeffE, setCoeffE] = useState(getRandomInt(-100, 100) / 10);
   const [coeffF, setCoeffF] = useState(getRandomInt(-100, 100) / 10);
-  const [radioValue, setRadioValue] = useState('0.1');
+  const [radioValue, setRadioValue] = useState(0.1);
   const [rangeSliderVal, setRangeSliderVal] = useState(1);
   const [checkedZoom, setCheckedZoom] = useState(true);
   const [checkedDerivative, setCheckedDerivative] = useState(true);
   const [checkedGrid, setCheckedGrid] = useState(true);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     let width = 800;
@@ -84,14 +87,14 @@ function App() {
               <div className="function-wrapper">
                 <Latex>{`$\\large{f(x) = \\frac{${coeffA}x^2${signedCoef(coeffB, '+')}x${signedCoef(coeffC, '+')}}{${coeffD}x^2${signedCoef(coeffE, '+')}x${signedCoef(coeffF, '+')}}}$`}</Latex>
                 <div className="sliders">
-                  <InputSlider step={parseInt(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="a" update={setCoeffA} initval={coeffA} />
-                  <InputSlider step={parseInt(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="b" update={setCoeffB} initval={coeffB} />
-                  <InputSlider step={parseInt(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="c" update={setCoeffC} initval={coeffC} />
-                  <InputSlider step={parseInt(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="d" update={setCoeffD} initval={coeffD} />
-                  <InputSlider step={parseInt(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="e" update={setCoeffE} initval={coeffE} />
-                  <InputSlider step={parseInt(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="f" update={setCoeffF} initval={coeffF} />
+                  <InputSlider step={radioValue} range={[-rangeSliderVal, rangeSliderVal]} label="a" update={setCoeffA} initval={coeffA} />
+                  <InputSlider step={radioValue} range={[-rangeSliderVal, rangeSliderVal]} label="b" update={setCoeffB} initval={coeffB} />
+                  <InputSlider step={radioValue} range={[-rangeSliderVal, rangeSliderVal]} label="c" update={setCoeffC} initval={coeffC} />
+                  <InputSlider step={radioValue} range={[-rangeSliderVal, rangeSliderVal]} label="d" update={setCoeffD} initval={coeffD} />
+                  <InputSlider step={radioValue} range={[-rangeSliderVal, rangeSliderVal]} label="e" update={setCoeffE} initval={coeffE} />
+                  <InputSlider step={radioValue} range={[-rangeSliderVal, rangeSliderVal]} label="f" update={setCoeffF} initval={coeffF} />
                 </div>
-                <Settings onClose={handleDialogUpdate} {...radioValue}{...rangeSliderVal}{...checkedZoom} {...checkedDerivative} {...checkedGrid} />
+                <Settings open={open} onClose={handleDialogUpdate} {...radioValue}{...rangeSliderVal}{...checkedZoom} {...checkedDerivative} {...checkedGrid} />
               </div>
             </div>
           </div>
