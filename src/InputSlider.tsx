@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
 import "./App.css";
+import { NumberLiteralType } from "typescript";
 
 const Input = styled(MuiInput)`
   width: 42px;
@@ -14,10 +15,12 @@ const Input = styled(MuiInput)`
 type InputSliderProps = {
   label: string;
   initval: number;
-  update: (arg: number) => void;
+  update?: (arg: number) => void;
+  range: number[];
+  step: number;
 };
 
-const InputSlider = ({ label, update, initval }: InputSliderProps) => {
+const InputSlider = ({ label, update, initval, range, step }: InputSliderProps) => {
   const name = label;
   const [value, setValue] = React.useState<
     number | string | Array<number | string>
@@ -40,6 +43,7 @@ const InputSlider = ({ label, update, initval }: InputSliderProps) => {
   };
 
   React.useEffect(() => {
+    if (!update) return
     update(value === "" ? 0 : (value as number));
   });
 
@@ -51,8 +55,8 @@ const InputSlider = ({ label, update, initval }: InputSliderProps) => {
       <Grid container spacing={2} alignItems="center">
         <Grid item xs>
           <Slider
-            min={-10}
-            max={10}
+            min={range[0]}
+            max={range[1]}
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
@@ -67,7 +71,7 @@ const InputSlider = ({ label, update, initval }: InputSliderProps) => {
             onChange={handleInputChange}
             onBlur={handleBlur}
             inputProps={{
-              step: 0.1,
+              step: step,
               min: -10,
               max: 10,
               type: "number",

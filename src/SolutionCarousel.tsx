@@ -25,10 +25,10 @@ export default function SolutionCarousel(props: CarouselProps) {
 
 function Item(props: ItemProps) {
     return (
-        <Paper>
+        <div className='MuiPaper-root'>
             <h2>{props.header}</h2>
             <p>{props.explanation}</p>
             {props.solution.map((item, i) => <div key={i}> <Latex>{item}</Latex> <br></br></div>)}
-        </Paper>
+        </div>
     )
 }
