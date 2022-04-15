@@ -11,6 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import InputSlider from './InputSlider';
 import { grid } from '@mui/system';
+import { stepButtonClasses } from '@mui/material';
 
 export interface SimpleDialogProps {
     // open: boolean;
@@ -40,13 +41,21 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
         setDerivativeValue(newValue)
         console.log(newValue)
     }
+    const handleZoomCheckbox = (event: React.ChangeEvent<HTMLInputElement>, newValue: boolean) => {
+        setZoomValue(newValue)
+        console.log(newValue)
+    }
+    const handleGridCheckbox = (event: React.ChangeEvent<HTMLInputElement>, newValue: boolean) => {
+        setGridValue(newValue)
+        console.log(newValue)
+    }
     // const handleClose = ({/*value: string*/ }) => {
     //     setOpen(false);
     //     // setSelectedValue(value);
     // };
     const handleClose = () => {
         setOpen(false);
-        setDerivative(derivativeValue)
+        onClose({ defaultStep: 0.1, defaultRange: 20, defaultZoom: zoomValue, defaultDerivative: derivativeValue, defaultGrid: gridValue })
     };
 
 
@@ -59,9 +68,9 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
             <Dialog onClose={handleClose} open={open}>
                 <DialogTitle>Set graph and slider settings</DialogTitle>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox checked={zoom} />} label="Enable zoom" />
+                    <FormControlLabel control={<Checkbox onChange={handleZoomCheckbox} checked={zoomValue} value={zoomValue} />} label="Enable zoom" />
                     <FormControlLabel control={<Checkbox onChange={handleDerivativeCheckbox} checked={derivativeValue} value={derivativeValue} />} label="Show derivative" />
-                    <FormControlLabel control={<Checkbox checked={grid} />} label="Show grid" />
+                    <FormControlLabel control={<Checkbox onChange={handleGridCheckbox} checked={gridValue} value={gridValue} />} label="Show grid" />
                 </FormGroup>
                 <FormControl>
                     <FormLabel id="demo-controlled-radio-buttons-group">Coefficient slider scale</FormLabel>

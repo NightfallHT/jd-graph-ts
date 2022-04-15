@@ -25,7 +25,7 @@ function App() {
     setRadioValue(props.defaultStep);
     setRangeSliderVal(props.defaultRange);
     setCheckedZoom(props.defaultZoom);
-    setCheckedDerivative();
+    setCheckedDerivative(props.defaultDerivative);
     setCheckedGrid(props.defaultGrid)
     setOpen(false);
   }
@@ -58,7 +58,7 @@ function App() {
       yAxis: { domain: [-20, 20] },
       xAxis: { domain: [-20, 20] },
       disableZoom: !checkedZoom,
-      grid: !checkedGrid,
+      grid: checkedGrid,
       data: [
         {
           fn: `(${coeffA}x^2+${coeffB}x+${coeffC})/(${coeffD}x^2+${coeffE}x+${coeffF})`,
