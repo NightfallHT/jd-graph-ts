@@ -39,7 +39,7 @@ function App() {
   const [coeffF, setCoeffF] = useState(getRandomInt(-100, 100) / 10);
   // const [, forceUpdate] = useReducer(x => x + 1, 0);
   const [radioValue, setRadioValue] = useState('0.1');
-  const [rangeSliderVal, setRangeSliderVal] = useState(1);
+  const [rangeSliderVal, setRangeSliderVal] = useState(20);
   const [checkedZoom, setCheckedZoom] = useState(true);
   const [checkedDerivative, setCheckedDerivative] = useState(true);
   const [checkedGrid, setCheckedGrid] = useState(true);
@@ -81,18 +81,19 @@ function App() {
         <div className="container">
           <div className="header-wrapper">
             <h1>Analysis of the variability course and a graph of a rational function defined by an equation in form:</h1>
-            <Latex>{`$\\Large{f(x) = \\frac{ax^2 + bx + c}{dx^2 + ex + f}}$`}</Latex>
+            <Latex>{`$\\Large{f(x) = \\frac{ax^2 + bx + c}{dx^2 + ex + f}}\\ \\ \\ \\normalsize {a \\neq 0 \\wedge d \\neq 0}$`}</Latex>
           </div>
           <div className="graph-wrapper">
             <div id="x" className="graph"></div>
             <div className="function-container">
               <div className="function-wrapper">
                 <Latex>{`$\\large{f(x) = \\frac{${coeffA}x^2${signedCoef(coeffB, '+')}x${signedCoef(coeffC, '+')}}{${coeffD}x^2${signedCoef(coeffE, '+')}x${signedCoef(coeffF, '+')}}}$`}</Latex>
+
                 <div className="sliders">
-                  <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="a" update={setCoeffA} initval={coeffA} />
+                  <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="a" update={setCoeffA} initval={coeffA} cantBeZero={true} />
                   <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="b" update={setCoeffB} initval={coeffB} />
                   <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="c" update={setCoeffC} initval={coeffC} />
-                  <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="d" update={setCoeffD} initval={coeffD} />
+                  <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="d" update={setCoeffD} initval={coeffD} cantBeZero={true} />
                   <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="e" update={setCoeffE} initval={coeffE} />
                   <InputSlider step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="f" update={setCoeffF} initval={coeffF} />
                 </div>

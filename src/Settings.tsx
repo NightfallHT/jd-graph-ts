@@ -71,7 +71,7 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
             <Button variant="contained" onClick={handleClickOpen}>
                 Settings
             </Button>
-            <Dialog onClose={handleClose} open={open}>
+            <Dialog className='settings' onClose={handleClose} open={open}>
                 <DialogTitle>Set graph and slider settings</DialogTitle>
                 <FormGroup>
                     <FormControlLabel control={<Checkbox onChange={handleZoomCheckbox} checked={zoomValue} value={zoomValue} />} label="Enable zoom" />

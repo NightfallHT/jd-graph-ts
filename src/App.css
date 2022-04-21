@@ -67,6 +67,7 @@ h1 {
 
 .graph-wrapper {
   display: flex;
+  align-items: center;
 }
 
 .function-wrapper {
@@ -78,7 +79,7 @@ h1 {
 
 .function-container {
   display: flex;
-  justify-content: center;
+
 }
 
 .graph {
@@ -91,8 +92,8 @@ h1 {
   width: auto;
 }
 
-.MuiPaper-root {
-  width: 100%;
+.css-1l7c0cy>div>div>div>div {
+  width: 80%;
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -100,10 +101,16 @@ h1 {
 }
 
 .MuiPaper-root>* {
+  text-align: center;
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
   /* FIXING OPTICAL ILLUSIONS, I KNOW WHAT I'M DOING */
   transform: translate(0, -15px);
+  font-size: 1.4vmin;
+  font-weight: 100;
+  font-style: italic;
+  display: flex;
+  justify-content: center;
 }
 
 .top-right-legend {
@@ -124,11 +131,28 @@ h1 {
   margin: 0.5em 0;
 }
 
-.MuiPaper-root>* {
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  padding: 20px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* .css-1l7c0cy {
+  position: relative !important;
+} */
+
+
+/* .css-ohwg9z,
+/* .css-ohwg9z>div, */
+/* .css-ohwg9z>div>div,
+.css-ohwg9z>div>div>div,
+.css-ohwg9z>div>div>div>div,
+.css-ohwg9z>div>div>div>div>div,
+.css-ohwg9z>div>div>div>div>div>div,
+.css-ohwg9z>div>div>div>div>div>div>div {
+  height: fit-content;
+} */
 
 /* FIXING WEIRD DIV HEIGHTS GOD HELP ME */
 

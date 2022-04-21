@@ -18,21 +18,23 @@ type InputSliderProps = {
   update?: (arg: number) => void;
   range: number[];
   step: number;
+  cantBeZero?: boolean;
 };
 
-const InputSlider = ({ label, update, initval, range, step }: InputSliderProps) => {
+const InputSlider = ({ label, update, initval, range, step, cantBeZero }: InputSliderProps) => {
   const name = label;
   const [value, setValue] = React.useState<
     number | string | Array<number | string>
   >(initval);
 
   const handleSliderChange = (event: Event, newValue: number | number[]) => {
+    if (cantBeZero && newValue === 0) return;
     setValue(newValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === "") {
-      setValue(0);
+      setValue(1);
       return
     }
     if (parseFloat(event.target.value) < range[0]) {
