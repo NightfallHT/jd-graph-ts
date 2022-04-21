@@ -15,7 +15,7 @@ interface CarouselProps {
 }
 export default function SolutionCarousel(props: CarouselProps) {
     return (
-        <Carousel autoPlay={false} animation={"slide"} cycleNavigation={false} navButtonsAlwaysVisible={true} height={800}>
+        <Carousel autoPlay={false} animation={"slide"} cycleNavigation={false} navButtonsAlwaysVisible={true} height={'60vmin'}>
             {
                 props.itemArr.map((item, i) => <Item key={i} header={item.header} explanation={item.explanation} solution={item.solution} />)
             }
