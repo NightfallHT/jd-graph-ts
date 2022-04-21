@@ -15,7 +15,7 @@ import { stepButtonClasses } from '@mui/material';
 
 export interface SimpleDialogProps {
     // open: boolean;
-    defaultStep: number;
+    defaultStep: string;
     defaultRange: number;
     defaultZoom: boolean;
     defaultDerivative: boolean;
@@ -28,12 +28,10 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
     // const [selectedValue, setSelectedValue] = React.useState(emails[1]);
     const [open, setOpen] = React.useState(false);
     const [range, setRange] = React.useState(20);
-    const [zoom, setZoom] = React.useState(true);
-    const [derivative, setDerivative] = React.useState(true);
-    const [grid, setGrid] = React.useState(false);
     const [zoomValue, setZoomValue] = React.useState(true);
     const [derivativeValue, setDerivativeValue] = React.useState(defaultDerivative);
     const [gridValue, setGridValue] = React.useState(false);
+    const [step, setStep] = React.useState('0.1');
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -49,14 +47,22 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
         setGridValue(newValue)
         console.log(newValue)
     }
+    const handleRangeSlider = (newValue: number) => {
+        setRange(newValue)
+        console.log(newValue)
+    }
+    const handleStep = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setStep((event.target as HTMLInputElement).value);
+    };
     // const handleClose = ({/*value: string*/ }) => {
     //     setOpen(false);
     //     // setSelectedValue(value);
     // };
     const handleClose = () => {
         setOpen(false);
-        onClose({ defaultStep: 0.1, defaultRange: 20, defaultZoom: zoomValue, defaultDerivative: derivativeValue, defaultGrid: gridValue })
+        onClose({ defaultStep: step, defaultRange: range, defaultZoom: zoomValue, defaultDerivative: derivativeValue, defaultGrid: gridValue })
     };
+
 
 
 
@@ -77,14 +83,15 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
                     <RadioGroup
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
-                        value={defaultStep}
+                        value={step}
+                        onChange={handleStep}
                     >
                         <FormControlLabel value={0.1} control={<Radio />} label="0.1" />
                         <FormControlLabel value={1} control={<Radio />} label="1" />
                         <FormControlLabel value={10} control={<Radio />} label="10" />
                     </RadioGroup>
                 </FormControl>
-                <InputSlider step={1} range={[1, 1000]} label="Set slider range" initval={defaultRange} />
+                <InputSlider step={1} range={[1, 1000]} label="Set slider range" initval={range} update={handleRangeSlider} />
             </Dialog>
         </div>
     );

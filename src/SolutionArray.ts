@@ -1,6 +1,6 @@
 import { ItemProps } from "./SolutionCarousel";
 import derivative from "function-plot";
-import { re } from "mathjs";
+import { re, simplify } from "mathjs";
 
 const solutionArray = (
   a: number,
@@ -14,6 +14,9 @@ const solutionArray = (
   const deltaDen = Math.pow(e, 2) - 4 * d * f;
   const deltaDerivativeNum =
     Math.pow(2 * (a * f - c * d), 2) - 4 * (a * e - b * d) * (b * f - e * c);
+
+  // const numeratorDerivativeSimplified = simplify(`(2*${a}x+${b})*(${d}x^2+${e}x+${f})-(${a}x^2+${b}x+${c})*(2*${d}x+${e})`);
+  // console.log(numeratorDerivativeSimplified);
   const solutionsDen = [
     (-e + Math.sqrt(deltaDen)) / (2 * d),
     (-e - Math.sqrt(deltaDen)) / (2 * d),
@@ -23,9 +26,9 @@ const solutionArray = (
     if (a * e - b * d !== 0) {
       return [
         (-2 * (a * f - c * d) + Math.sqrt(deltaDerivativeNum)) /
-          (2 * (a * e - b * d)),
+        (2 * (a * e - b * d)),
         (-2 * (a * f - c * d) - Math.sqrt(deltaDerivativeNum)) /
-          (2 * (a * e - b * d)),
+        (2 * (a * e - b * d)),
       ];
     } else {
       return [-(b * f - e * c) / (2 * (a * f - c * d))];
@@ -46,8 +49,7 @@ const solutionArray = (
       return [`$\\Delta < 0 \\Rightarrow  x _0 \\in \\varnothing$`];
     if (delta === 0)
       return [
-        `$\\Delta = 0 \\Rightarrow \\\\ x = \\frac{-b}{2a} \\ x = ${
-          (-b / 2) * a
+        `$\\Delta = 0 \\Rightarrow \\\\ x = \\frac{-b}{2a} \\ x = ${(-b / 2) * a
         }$`,
       ];
     else
@@ -55,8 +57,7 @@ const solutionArray = (
         `$\\Delta > 0 \\Rightarrow$`,
         `$\\ x = \\frac{-b\\pm \\sqrt{\\Delta}}{2*a}$`,
         `$\\ x = \\frac{${-b} + \\sqrt{${delta}}}{2\\cdot ${a}}\\vee x = \\frac{${-b} - \\sqrt{${delta}}}{2\\cdot ${a}}$`,
-        `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${
-          (-b + Math.sqrt(delta)) / (2 * a)
+        `$\\ x = ${(-b - Math.sqrt(delta)) / (2 * a)} \\vee x = ${(-b + Math.sqrt(delta)) / (2 * a)
         }$`,
       ];
   }
@@ -75,70 +76,57 @@ const solutionArray = (
         "the limits around the point(s) excluded from the domain:",
         "to calculate them we need to find from which direction the zero in the denominator is approached,",
         "and what is the sign the numerator takes at where the denominator equals zero",
-        `$\\lim\\limits_{x \\rightarrow ${
-          solutionsDen[0]
-        }^-} \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]
+        }^-} \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+} 
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^-}
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
-            ? "+"
-            : "-"
-        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
+          ? "+"
+          : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[1]}^+} 
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
       ];
     } else if (deltaDen === 0) {
       return [
         "the limits around the point(s) excluded from the domain:",
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-}
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+}
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
       ];
     }
@@ -322,21 +310,18 @@ const solutionArray = (
         "$ax^2 + bx + c = a(-x)^2 + b(-x) + c$",
         " only holds if b = 0",
         "check whether the numerator is even:",
-        `${
-          b === 0
-            ? "$ b = 0 \\iff g \\ is \\  even$"
-            : "$b \\neq 0 \\iff g \\ isn't \\ even$"
+        `${b === 0
+          ? "$ b = 0 \\iff g \\ is \\  even$"
+          : "$b \\neq 0 \\iff g \\ isn't \\ even$"
         }`,
         "check whether the denominator is even:",
-        `${
-          e === 0
-            ? "$e = 0 \\iff h \\ is \\  even$"
-            : "$e \\neq 0 \\iff h \\ isn't \\ even$"
+        `${e === 0
+          ? "$e = 0 \\iff h \\ is \\  even$"
+          : "$e \\neq 0 \\iff h \\ isn't \\ even$"
         }`,
-        `the function is ${
-          b === 0 && e === 0
-            ? "even, because both the numerator and the denominator are even"
-            : "not even, because the numerator or the denominator or both are not even "
+        `the function is ${b === 0 && e === 0
+          ? "even, because both the numerator and the denominator are even"
+          : "not even, because the numerator or the denominator or both are not even "
         }`,
       ],
     },
@@ -348,8 +333,7 @@ const solutionArray = (
         "the limits at infinity:",
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{ax^2 + bx + c}{dx^2 + ex + f} = $`,
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{x(a + \\frac{b}{x} + \\frac{c}{x^2})}{x(d + \\frac{e}{x} + \\frac{f}{x^2})} = $`,
-        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{a + \\frac{b}{x} + \\frac{c}{x^2}}{d + \\frac{e}{x} + \\frac{f}{x^2}} =\\frac{a}{d} = ${
-          a / d
+        `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{a + \\frac{b}{x} + \\frac{c}{x^2}}{d + \\frac{e}{x} + \\frac{f}{x^2}} =\\frac{a}{d} = ${a / d
         } $`,
         ...limit(),
       ],

@@ -31,20 +31,35 @@ const InputSlider = ({ label, update, initval, range, step }: InputSliderProps) 
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value === "") {
+      setValue(0);
+      return
+    }
+    if (parseFloat(event.target.value) < range[0]) {
+      setValue(range[0]);
+    } else if (parseFloat(event.target.value) > range[1]) {
+      setValue(range[1]);
+    }
     setValue(event.target.value === "" ? "" : Number(event.target.value));
   };
 
   const handleBlur = () => {
-    if (value < -10) {
-      setValue(-10);
-    } else if (value > 10) {
-      setValue(10);
+    if (value < range[0]) {
+      setValue(range[0]);
+    } else if (value > range[1]) {
+      setValue(range[1]);
     }
   };
 
   React.useEffect(() => {
     if (!update) return
+    if (value < range[0]) {
+      setValue(range[0]);
+    } else if (value > range[1]) {
+      setValue(range[1]);
+    }
     update(value === "" ? 0 : (value as number));
+
   });
 
   return (
@@ -60,7 +75,7 @@ const InputSlider = ({ label, update, initval, range, step }: InputSliderProps) 
             value={typeof value === "number" ? value : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
-            step={0.1}
+            step={step}
           />
         </Grid>
         <Grid item>
@@ -71,9 +86,10 @@ const InputSlider = ({ label, update, initval, range, step }: InputSliderProps) 
             onChange={handleInputChange}
             onBlur={handleBlur}
             inputProps={{
+              value: value,
               step: step,
-              min: -10,
-              max: 10,
+              min: range[0],
+              max: range[1],
               type: "number",
               "aria-labelledby": "input-slider",
             }}
