@@ -5,15 +5,14 @@ import functionPlot from "function-plot";
 import SolutionCarousel from "./SolutionCarousel";
 import solutionArray from "./SolutionArray";
 import Latex from "react-latex";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import Settings, { SimpleDialogProps } from "./Settings";
 import { derivative, max } from "mathjs";
 import FormulaButton from "./FormulaButton";
 import InputSection from "./InputSection";
 
 function signedCoef(coef: number, op: string) {
-  if ((op === "-" && coef < 0) || (op === "+" && coef >= 0))
-    return `+ ${coef}`;
+  if ((op === "-" && coef < 0) || (op === "+" && coef >= 0)) return `+ ${coef}`;
   if (op === "-" && coef === 0) return "- 0";
   return `${coef}`;
 }
@@ -24,18 +23,27 @@ function App() {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
   }
+  function handleFormulaButton(index: number): void {
+    setCoeffs(predefinedFormulae[index]);
+  }
 
-  function handleDialogUpdate(props: Omit<SimpleDialogProps, 'open' | 'onClose'>): void {
-    setRadioValue(props.defaultStep);
-    setRangeSliderVal(props.defaultRange);
-    setCheckedZoom(props.defaultZoom);
-    setCheckedDerivative(props.defaultDerivative);
-    setCheckedGrid(props.defaultGrid)
-    setOpen(false);
-    console.log(-rangeSliderVal)
-    console.log(rangeSliderVal)
-    console.log(coeffs.a)
-    console.log(Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.a)))
+  const [coeffs, setCoeffs] = useState({
+    a: getRandomInt(-10, 10),
+    b: getRandomInt(-10, 10),
+    c: getRandomInt(-10, 10),
+    d: getRandomInt(-10, 10),
+    e: getRandomInt(-10, 10),
+    f: getRandomInt(-10, 10),
+  });
+
+  const [radioValue, setRadioValue] = useState("1");
+  const [rangeSliderVal, setRangeSliderVal] = useState(20);
+  const [checkedZoom, setCheckedZoom] = useState(true);
+  const [checkedDerivative, setCheckedDerivative] = useState(true);
+  const [checkedGrid, setCheckedGrid] = useState(true);
+  const [open, setOpen] = React.useState(false);
+  const predefinedFormulae = [{ a: 1, b: 1, c: 1, d: 1, e: 1, f: 1 }];
+  useEffect(() => {
     setCoeffs({
       a: Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.a)),
       b: Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.b)),
@@ -43,38 +51,13 @@ function App() {
       d: Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.d)),
       e: Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.e)),
       f: Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.f)),
-      // a: 1,
-      // b: 1,
-      // c: 1,
-      // d: 1,
-      // e: 1,
-      // f: 1
-    })
-  }
-  function handleFormulaButton(index: number): void {
-    setCoeffs(predefinedFormulae[index]);
-  }
-
-  const [coeffs, setCoeffs] = useState({ a: getRandomInt(-10, 10), b: getRandomInt(-10, 10), c: getRandomInt(-10, 10), d: getRandomInt(-10, 10), e: getRandomInt(-10, 10), f: getRandomInt(-10, 10) })
-
-  // const [, forceUpdate] = useReducer(x => x + 1, 0);
-  const [radioValue, setRadioValue] = useState('1');
-  const [rangeSliderVal, setRangeSliderVal] = useState(20);
-  const [checkedZoom, setCheckedZoom] = useState(true);
-  const [checkedDerivative, setCheckedDerivative] = useState(true);
-  const [checkedGrid, setCheckedGrid] = useState(true);
-  const [open, setOpen] = React.useState(false);
-  const predefinedFormulae = [{ a: 1, b: 1, c: 1, d: 1, e: 1, f: 1 }]
-
-
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
   useEffect(() => {
-    let width = document.getElementById('x')?.offsetWidth;
+    let width = document.getElementById("x")?.offsetWidth;
     let height = 800;
 
-    // let contentsBounds = document.getElementById('x')!.getBoundingClientRect();
-    // let ratio = contentsBounds.width / width;
-    // width *= ratio;
-    // height *= ratio;
     functionPlot({
       target: "#x",
       width,
@@ -102,7 +85,10 @@ function App() {
       <div className="main primary">
         <div className="container secondary">
           <div className="header-wrapper">
-            <h1>Analysis of the variability course and a graph of a rational function defined by an equation in form:</h1>
+            <h1>
+              Analysis of the variability course and a graph of a rational
+              function defined by an equation in form:
+            </h1>
             <Latex>{`$\\Large{f(x) = \\frac{ax^2 + bx + c}{dx^2 + ex + f}}\\ \\ \\ \\normalsize {a \\neq 0 \\wedge d \\neq 0}$`}</Latex>
             <h2 id="warning"> WARNING: We round to 4 decimal places</h2>
           </div>
@@ -110,19 +96,93 @@ function App() {
             <div id="x" className="graph"></div>
             <div className="function-container">
               <div className="function-wrapper component">
-                <Latex>{`$\\large{f(x) = \\frac{${coeffs.a}x^2${signedCoef(coeffs.b, '+')}x${signedCoef(coeffs.c, '+')}}{${coeffs.d}x^2${signedCoef(coeffs.e, '+')}x${signedCoef(coeffs.f, '+')}}}$`}</Latex>
+                <Latex>{`$\\large{f(x) = \\frac{${coeffs.a}x^2${signedCoef(
+                  coeffs.b,
+                  "+"
+                )}x${signedCoef(coeffs.c, "+")}}{${coeffs.d}x^2${signedCoef(
+                  coeffs.e,
+                  "+"
+                )}x${signedCoef(coeffs.f, "+")}}}$`}</Latex>
                 <div className="sliders">
-                  <InputSection step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="a" update={(a) => { setCoeffs({ ...coeffs, a }) }} value={coeffs.a} cantBeZero={true} />
-                  <InputSection step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="b" update={(b) => { setCoeffs({ ...coeffs, b }) }} value={coeffs.b} />
-                  <InputSection step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="c" update={(c) => { setCoeffs({ ...coeffs, c }) }} value={coeffs.c} />
-                  <InputSection step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="d" update={(d) => { setCoeffs({ ...coeffs, d }) }} value={coeffs.d} cantBeZero={true} />
-                  <InputSection step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="e" update={(e) => { setCoeffs({ ...coeffs, e }) }} value={coeffs.e} />
-                  <InputSection step={parseFloat(radioValue)} range={[-rangeSliderVal, rangeSliderVal]} label="f" update={(f) => { setCoeffs({ ...coeffs, f }) }} value={coeffs.f} />
+                  <InputSection
+                    step={parseFloat(radioValue)}
+                    range={[-rangeSliderVal, rangeSliderVal]}
+                    label="a"
+                    update={(a) => {
+                      setCoeffs({ ...coeffs, a });
+                    }}
+                    value={coeffs.a}
+                    cantBeZero={true}
+                  />
+                  <InputSection
+                    step={parseFloat(radioValue)}
+                    range={[-rangeSliderVal, rangeSliderVal]}
+                    label="b"
+                    update={(b) => {
+                      setCoeffs({ ...coeffs, b });
+                    }}
+                    value={coeffs.b}
+                  />
+                  <InputSection
+                    step={parseFloat(radioValue)}
+                    range={[-rangeSliderVal, rangeSliderVal]}
+                    label="c"
+                    update={(c) => {
+                      setCoeffs({ ...coeffs, c });
+                    }}
+                    value={coeffs.c}
+                  />
+                  <InputSection
+                    step={parseFloat(radioValue)}
+                    range={[-rangeSliderVal, rangeSliderVal]}
+                    label="d"
+                    update={(d) => {
+                      setCoeffs({ ...coeffs, d });
+                    }}
+                    value={coeffs.d}
+                    cantBeZero={true}
+                  />
+                  <InputSection
+                    step={parseFloat(radioValue)}
+                    range={[-rangeSliderVal, rangeSliderVal]}
+                    label="e"
+                    update={(e) => {
+                      setCoeffs({ ...coeffs, e });
+                    }}
+                    value={coeffs.e}
+                  />
+                  <InputSection
+                    step={parseFloat(radioValue)}
+                    range={[-rangeSliderVal, rangeSliderVal]}
+                    label="f"
+                    update={(f) => {
+                      setCoeffs({ ...coeffs, f });
+                    }}
+                    value={coeffs.f}
+                  />
                 </div>
-                <Settings open={open} onClose={handleDialogUpdate} {...radioValue}{...rangeSliderVal}{...checkedZoom} {...checkedDerivative} {...checkedGrid} />
+                <Settings
+                  open={open}
+                  {...radioValue}
+                  {...rangeSliderVal}
+                  {...checkedZoom}
+                  {...checkedDerivative}
+                  {...checkedGrid}
+                  {...setRadioValue}
+                  {...setRangeSliderVal}
+                  {...setCheckedZoom}
+                  {...setCheckedDerivative}
+                  {...setCheckedGrid}
+                  {...setOpen}
+                />
               </div>
               <div>
-                <FormulaButton onClick={() => { handleFormulaButton(0) }} coeffs={Array.from(Object.values(predefinedFormulae[0]))}></FormulaButton>
+                <FormulaButton
+                  onClick={() => {
+                    handleFormulaButton(0);
+                  }}
+                  coeffs={Array.from(Object.values(predefinedFormulae[0]))}
+                ></FormulaButton>
               </div>
             </div>
           </div>
