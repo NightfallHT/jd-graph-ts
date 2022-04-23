@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
 }
 
@@ -20,6 +20,9 @@ h1 {
   margin-bottom: 30px;
   /*css reset*/
   width: 50%;
+}
+#warning {
+  color: red;
 }
 
 .container {
@@ -46,14 +49,13 @@ h1 {
   margin-bottom: 50px;
 }
 
-.header-wrapper>span,
+.header-wrapper > span,
 .function-wrapper {
   border-radius: 25px;
   padding: 20px;
   /* border-radius: 65px; */
   background: #f0f0f0;
-  box-shadow: 25px 25px 50px #d8d8d8,
-    -25px -25px 50px #ffffff;
+  box-shadow: 25px 25px 50px #d8d8d8, -25px -25px 50px #ffffff;
 }
 
 .css-ohwg9z {
@@ -61,8 +63,7 @@ h1 {
   padding: 20px;
   /* border-radius: 65px; */
   background: #f0f0f0;
-  box-shadow: inset 15px 25px 10px #ededed,
-    -25px -25px 50px #ffffff;
+  box-shadow: inset 15px 25px 10px #ededed, -25px -25px 50px #ffffff;
 }
 
 .graph-wrapper {
@@ -79,20 +80,19 @@ h1 {
 
 .function-container {
   display: flex;
-
 }
 
 .graph {
   width: fit-content;
 }
 
-.css-1l7c0cy>div>div>div {
+.css-1l7c0cy > div > div > div {
   display: flex;
   justify-content: center;
   width: auto;
 }
 
-.css-1l7c0cy>div>div>div>div {
+.css-1l7c0cy > div > div > div > div {
   width: 80%;
   padding: 10px;
   display: flex;
@@ -100,7 +100,7 @@ h1 {
   justify-content: center;
 }
 
-.MuiPaper-root>* {
+.MuiPaper-root > * {
   text-align: center;
   margin-block-start: 0.5em;
   margin-block-end: 0.5em;
@@ -117,12 +117,12 @@ h1 {
   display: none;
 }
 
-.katex-display>.katex {
+.katex-display > .katex {
   white-space: normal;
 }
 
 /* Add space between broken lines: */
-.katex-display>.base {
+.katex-display > .base {
   margin: 0.25em 0;
 }
 
@@ -141,7 +141,6 @@ h1 {
 /* .css-1l7c0cy {
   position: relative !important;
 } */
-
 
 /* .css-ohwg9z,
 /* .css-ohwg9z>div, */
