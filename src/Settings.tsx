@@ -12,6 +12,7 @@ import FormLabel from '@mui/material/FormLabel';
 import InputSlider from './InputSlider';
 import { grid } from '@mui/system';
 import { stepButtonClasses } from '@mui/material';
+import InputSection from './InputSection';
 
 export interface SimpleDialogProps {
     // open: boolean;
@@ -31,25 +32,21 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
     const [zoomValue, setZoomValue] = React.useState(true);
     const [derivativeValue, setDerivativeValue] = React.useState(defaultDerivative);
     const [gridValue, setGridValue] = React.useState(false);
-    const [step, setStep] = React.useState('0.1');
+    const [step, setStep] = React.useState('1');
     const handleClickOpen = () => {
         setOpen(true);
     };
     const handleDerivativeCheckbox = (event: React.ChangeEvent<HTMLInputElement>, newValue: boolean) => {
         setDerivativeValue(newValue)
-        console.log(newValue)
     }
     const handleZoomCheckbox = (event: React.ChangeEvent<HTMLInputElement>, newValue: boolean) => {
         setZoomValue(newValue)
-        console.log(newValue)
     }
     const handleGridCheckbox = (event: React.ChangeEvent<HTMLInputElement>, newValue: boolean) => {
         setGridValue(newValue)
-        console.log(newValue)
     }
     const handleRangeSlider = (newValue: number) => {
         setRange(newValue)
-        console.log(newValue)
     }
     const handleStep = (event: React.ChangeEvent<HTMLInputElement>) => {
         setStep((event.target as HTMLInputElement).value);
@@ -91,7 +88,7 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
                         <FormControlLabel value={10} control={<Radio />} label="10" />
                     </RadioGroup>
                 </FormControl>
-                <InputSlider step={1} range={[1, 1000]} label="Set slider range" initval={range} update={handleRangeSlider} />
+                <InputSection step={1} range={[1, 1000]} label="Set slider range" value={range} update={handleRangeSlider} />
             </Dialog>
         </div>
     );
