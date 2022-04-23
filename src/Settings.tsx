@@ -30,7 +30,7 @@ export default function Settings({ /*open*/ defaultStep, defaultRange, defaultZo
     const [open, setOpen] = React.useState(false);
     const [range, setRange] = React.useState(20);
     const [zoomValue, setZoomValue] = React.useState(true);
-    const [derivativeValue, setDerivativeValue] = React.useState(defaultDerivative);
+    const [derivativeValue, setDerivativeValue] = React.useState(true);
     const [gridValue, setGridValue] = React.useState(false);
     const [step, setStep] = React.useState('1');
     const handleClickOpen = () => {
