@@ -62,6 +62,10 @@ const solutionArray = (
 
   function rootsOfQuadratic(a: number, b: number, c: number): string[] {
     let delta = Math.pow(b, 2) - 4 * a * c;
+    if (a === 0)
+       return [`$The function is linear (a = 0) \\Rightarrow \\\\ x _0 = \\frac{c}{b}$`,
+               `$x _0 =\\frac{${round(c)}}{${round(b)}} $`,
+               `$x _0 = ${round(c/b)}$`]
     if (delta < 0)
       return [`$\\Delta < 0 \\Rightarrow  x _0 \\in \\varnothing$`];
     if (delta === 0)
@@ -96,9 +100,8 @@ const solutionArray = (
   function limit() {
     if (deltaDen > 0) {
       return [
-        "the limits around the point(s) excluded from the domain:",
-        "to calculate them we need to find from which direction the zero in the denominator is approached,",
-        "and what is the sign the numerator takes at where the denominator equals zero",
+        "The limits around the point(s) excluded from the domain:",
+        "To calculate them we need to find from which direction the zero in the denominator is approached,and what is the sign the numerator takes at where the denominator equals zero",
         `$\\lim\\limits_{x \\rightarrow ${round(
           solutionsDen[0]
         )}^-} \\stackrel{[\\frac{${
@@ -143,7 +146,7 @@ const solutionArray = (
       ];
     } else if (deltaDen === 0) {
       return [
-        "the limits around the point(s) excluded from the domain:",
+        "The limits around the point(s) excluded from the domain:",
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-}
         \\stackrel{[\\frac{${
           a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
@@ -167,7 +170,7 @@ const solutionArray = (
       ];
     }
     return [
-      "there are no vertical asymptotes, since the denominator is never equal to zero",
+      "Since the denominator is never equal to zero, there are no vertical asymptotes",
     ];
   }
 
@@ -285,8 +288,6 @@ const solutionArray = (
         increasing,
       });
     });
-    if (rangesParsed) {
-    }
     const columns =
       ranges.length + solutionsDerivativeNum.length + solutionsDen.length;
     let output = `$\\begin{array}{ c`;
@@ -342,46 +343,46 @@ const solutionArray = (
   }
   return [
     {
-      header: "find out the solution with our super duper meth calculator",
+      header: "Procedurally generated steps of solving the equation",
       explanation:
-        "you can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
+        "You can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
       solution: ["WARNING: We round to 4 decimal places"],
     },
     {
-      header: "step 1 - find the domain",
-      explanation: "find xs where the denominator = 0",
+      header: "Step 1 - Find the domain",
+      explanation: "Find xs where the denominator = 0 to eliminate undfined points from the domain",
       solution: [
-        "1: take the denominator",
-        `$ ${d}x^2 ${signedCoef(e, "+")}x ${signedCoef(f, "+")}$`,
-        "2: calculate delta",
+        "Take the denominator and check for points equal to zero",
+        `$ 0 = ${d}x^2 ${signedCoef(e, "+")}x ${signedCoef(f, "+")}$`,
+        "Calculate the delta of a quadratic equation defined by the formula:",
         `$\\Delta = b^2 - 4ac$`,
         `$\\Delta = ${e}^2 - 4\\cdot ${d}\\cdot ${f}$`,
         `$\\Delta = ${deltaDen}$`,
-        "3: determine the roots based on delta value",
+        "Determine the roots based on the delta value",
         ...rootsOfQuadratic(d, e, f),
-        "4: roots of the equation are where the denominator = 0, therefore:",
+        "Roots of the equation are where the denominator = 0, therefore:",
         ...findDomain(deltaDen),
       ],
     },
     {
-      header: "step 2 - find roots",
-      explanation: "find xs where the numerator = 0",
+      header: "Step 2 - Find roots",
+      explanation: "Find all values of x where the graph crosses the x axis (where the numerator is equal to zero)",
       solution: [
-        "1: take the numerator",
-        `$ ${a}x^2 ${signedCoef(b, "+")}x ${signedCoef(c, "+")}$`,
-        "2: calculate delta",
+        "Take the numerator and check for points equal to zero",
+        `$ 0 = ${a}x^2 ${signedCoef(b, "+")}x ${signedCoef(c, "+")}$`,
+        "Calculate the delta of a quadratic equation defined by the formula:",
         `$\\Delta = b^2 - 4ac$`,
         `$\\Delta = ${b}^2 - 4\\cdot ${a}\\cdot ${c}$`,
         `$\\Delta = ${deltaNum}$`,
-        "3: determine the roots based on delta value",
+        "Determine the roots based on delta value",
         ...rootsOfQuadratic(a, b, c),
       ],
     },
     {
-      header: "step 3 - find where function crosses the Y axis",
-      explanation: "determine the value of f(x) when x = 0",
+      header: "Step 3 - Find where function crosses the Y axis",
+      explanation: "Function crosses the Y axis when x = 0",
       solution: [
-        "1: substitute 0 for x in the function equation",
+        "Substitute 0 for x in the function equation",
         `$ f(0)=\\frac{${a} \\ \\cdot \\ 0^2 ${signedCoef(
           b,
           "+"
@@ -399,26 +400,26 @@ const solutionArray = (
       ],
     },
     {
-      header: "step 4 - check for evenness of the function",
-      explanation: "check whether f(x) = f(-x)",
+      header: "Step 4 - Check for evenness of the function",
+      explanation: "Check whether f(x) = f(-x) to figure out whether the graph is symmetrical along the Y axis",
       solution: [
         "$ f(x) =\\frac{ax^2 + bx + c}{dx^2 + ex + f} = \\frac{g(x)}{h(x)}$",
         " a quadratic function is even if and only if the middle term is equal to zero, because",
         "$ax^2 + bx + c = a(-x)^2 + b(-x) + c$",
         " only holds if b = 0",
-        "check whether the numerator is even:",
+        "Check whether the numerator is even:",
         `${
           b === 0
             ? "$ b = 0 \\iff g \\ is \\  even$"
             : "$b \\neq 0 \\iff g \\ isn't \\ even$"
         }`,
-        "check whether the denominator is even:",
+        "Check whether the denominator is even:",
         `${
           e === 0
             ? "$e = 0 \\iff h \\ is \\  even$"
             : "$e \\neq 0 \\iff h \\ isn't \\ even$"
         }`,
-        `the function is ${
+        `The function is ${
           b === 0 && e === 0
             ? "even, because both the numerator and the denominator are even"
             : "not even, because the numerator or the denominator or both are not even "
@@ -426,11 +427,11 @@ const solutionArray = (
       ],
     },
     {
-      header: "step 5 - calculate important limits",
+      header: "Step 5 - Calculate important limits",
       explanation:
-        "calculate the limits at infinity and at the point where the denominator equals zero",
+        "Calculate the limits at infinity and at the points excluded from the domain",
       solution: [
-        "the limits at infinity:",
+        "The limits at infinity:",
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{ax^2 + bx + c}{dx^2 + ex + f} = $`,
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{x(a + \\frac{b}{x} + \\frac{c}{x^2})}{x(d + \\frac{e}{x} + \\frac{f}{x^2})} = $`,
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} \\frac{a + \\frac{b}{x} + \\frac{c}{x^2}}{d + \\frac{e}{x} + \\frac{f}{x^2}} =\\frac{a}{d} = ${round(
@@ -440,38 +441,36 @@ const solutionArray = (
       ],
     },
     {
-      header: "step 6 - find the asymptotes",
+      header: "Step 6 - Find the asymptotes",
       explanation:
-        "check for the existence of horizontal, vertical and slant asymptotes",
+        "Check for the existence of horizontal, vertical and slant asymptotes",
       solution: [
-        "the limits at infinity are the horizontal asymptotes:",
+        "The limits at infinity are the horizontal asymptotes:",
         `$\\lim\\limits_{x\\rightarrow\\pm\\infin} = ${round(a / d)}$`,
-        "vertical asymptotes are the points where y -> infinity, or simply the roots of the denominator",
-        "(spoiler, we did that in step 1)",
+        "Vertical asymptotes are the points where y approaches infinity, or simply the roots of the denominator",
         ...rootsOfQuadratic(d, e, f),
-        "slant asymptotes exist only when the polynomial in the numerator is of a higher degree than the denominator",
-        "since the assignment specifically said $a \\neq 0$ and $d \\neq 0$, this rule is never satisfied, therefore there is no such asymptote",
+        "Slant asymptotes exist only when the polynomial in the numerator is of a higher degree than the denominator",
+        "Since we're assuming that $a \\neq 0$ and $d \\neq 0$, this rule is never satisfied, therefore there is no such asymptote",
       ],
     },
     {
-      header: "step 7 - determine the monotonicity",
+      header: "Step 7 - Determine the monotonicity",
       explanation:
-        "the monotonicity of a function is directly related to it's derivative",
+        "Determine the ranges where the function is increasing and decreasing",
       solution: [
-        "therefore we must find it:",
-        "let's treat our numerator and denominator as two separate functions:",
+        "The monotonicity of a function is directly related to its derivative, therefore we must find it:",
+        "Let's treat our numerator and denominator as two separate functions:",
         `$g(x) = ax^2 + bx + c$`,
         `$h(x) = dx^2 + ex + f$`,
         `$\\frac{d}{dx} f(x) = \\frac{d}{dx} \\frac{g(x)}{h(x)} = \\frac{\\frac{d}{dx} g(x) \\cdot h(x) - g(x) \\cdot \\frac{d}{dx} h(x)}{h(x)^2}$`,
 
         `$\\frac{d}{dx} f(x) = \\frac{(2ax + b) \\cdot (dx^2 + ex + f) - (ax^2 + bx + c) \\cdot (2dx + e)}{g(x)^2}$`,
-        "since the denominator is always greater than 0 we can just ignore it",
-        "so to determine the sign of the derivative we only need to consider the numerator:",
+        "Since the denominator is always greater than 0, it's not necessary to account for it when determining the sign of derivative",
         // `$(${2 * a}x ${signedCoef(b, '+')}) \\cdot ${d}^2 ${signedCoef(e, '+')}x ${signedCoef(f, '+')} ${signedCoef(a, '-')}x^2 ${signedCoef(b, '+')}x ${signedCoef(c, '+')} \\cdot (${2 * d}x ${signedCoef(e, '+')})$`,
         `$(2ax + b) \\cdot (dx^2 + ex + f) - (ax^2 + bx + c) \\cdot (2dx + e)$`,
-        "which can be rearranged as: ",
+        "Which can be rearranged as: ",
         "$(ae-bd)x^2 + 2(af - cd)x + bf - ec$",
-        "which is just a quadratic into which we can substitue our coefficients, resulting in:",
+        "Which is just a quadratic into which we can substitue our coefficients, resulting in:",
         `$${derivativeNumeratorA}x^2 ${signedCoef(
           2 * derivativeNumeratorB,
           "+"
@@ -479,12 +478,12 @@ const solutionArray = (
       ],
     },
     {
-      header: "step 7.5 - still monotonicity",
-      explanation: "continuation of step 7",
+      header: "Step 7.5 - Still monotonicity",
+      explanation: "Continuation of step 7",
       solution: [
-        "now we need to find the local extremes of the function",
-        "to do that we need to determine whether the derivative changes sign (crosses the X axis)",
-        "first we find the delta of the numerator of the derivative",
+        "Now we need to find the local extremes of the function",
+        "To do that we need to determine whether the derivative changes sign (crosses the X axis)",
+        "First we find the delta of the numerator of the derivative",
         `$\\Delta = ${round(deltaDerivativeNum)}$`,
         ...rootsOfQuadratic(
           derivativeNumeratorA,
@@ -496,10 +495,10 @@ const solutionArray = (
       ],
     },
     {
-      header: "step 8 - draw a table of ranges and monotonocinicity",
+      header: "Step 8 - Draw a table of ranges and monotonicity",
       explanation:
-        "table. take limits, asymptotes and derivatives and just fill it in idk.",
-      solution: ["draw table", table(monotonicityRanges())],
+        "The table will help drawing the graph, because it outlines exact ranges of monotonicity and limits in one spot",
+      solution: ["Take the info from all the previous steps and draw the table", table(monotonicityRanges())],
     },
   ] as ItemProps[];
 };

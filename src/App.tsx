@@ -90,7 +90,7 @@ function App() {
               function defined by an equation in form:
             </h1>
             <Latex>{`$\\Large{f(x) = \\frac{ax^2 + bx + c}{dx^2 + ex + f}}\\ \\ \\ \\normalsize {a \\neq 0 \\wedge d \\neq 0}$`}</Latex>
-            <h2 id="warning"> WARNING: We round to 4 decimal places</h2>
+            {/* <h2 id="warning"> WARNING: We round to 4 decimal places</h2> */}
           </div>
           <div className="graph-wrapper">
             <div id="x" className="graph"></div>

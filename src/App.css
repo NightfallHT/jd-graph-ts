@@ -26,6 +26,10 @@ h1 {
   color: red;
 }
 
+.solutions {
+  font-weight: 300;
+}
+
 .container {
   background-color: rgb(240, 240, 240);
   box-sizing: border-box;
