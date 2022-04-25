@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/jd-graph-ts/static/css/main.fe23e50d.css",
+    "main.css": "/jd-graph-ts/static/css/main.d34fbfa8.css",
     "main.js": "/jd-graph-ts/static/js/main.a5c3e440.js",
     "index.html": "/jd-graph-ts/index.html",
-    "main.fe23e50d.css.map": "/jd-graph-ts/static/css/main.fe23e50d.css.map",
+    "main.d34fbfa8.css.map": "/jd-graph-ts/static/css/main.d34fbfa8.css.map",
     "main.a5c3e440.js.map": "/jd-graph-ts/static/js/main.a5c3e440.js.map"
   },
   "entrypoints": [
-    "static/css/main.fe23e50d.css",
+    "static/css/main.d34fbfa8.css",
     "static/js/main.a5c3e440.js"
   ]
 }
