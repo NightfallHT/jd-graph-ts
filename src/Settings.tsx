@@ -9,9 +9,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-import InputSlider from "./InputSlider";
-import { grid } from "@mui/system";
-import { stepButtonClasses } from "@mui/material";
 import InputSection from "./InputSection";
 
 export interface SimpleDialogProps {
@@ -47,6 +44,9 @@ export default function Settings({
   const handleClickOpen = () => {
     setOpen(true);
   };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleDerivativeCheckbox = (
     event: React.ChangeEvent<HTMLInputElement>,
     newValue: boolean
@@ -71,24 +71,12 @@ export default function Settings({
   const handleStep = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStep((event.target as HTMLInputElement).value);
   };
-  // const handleClose = ({/*value: string*/ }) => {
-  //     setOpen(false);
-  //     // setSelectedValue(value);
-  // };
-  const handleClose = () => {
-    setOpen(false);
-    /*onClose({
-      defaultStep: step,
-      defaultRange: range,
-      defaultZoom: zoomValue,
-      defaultDerivative: derivativeValue,
-      defaultGrid: gridValue,
-    });*/
-  };
+
+
 
   return (
-    <div>
-      <Button variant="contained" onClick={handleClickOpen}>
+    <div className="settings-button">
+      <Button disableRipple={true} variant="contained" onClick={handleClickOpen}>
         Settings
       </Button>
       <Dialog className="settings" onClose={handleClose} open={open}>
