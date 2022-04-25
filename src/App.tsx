@@ -42,7 +42,12 @@ function App() {
   const [checkedDerivative, setCheckedDerivative] = useState(true);
   const [checkedGrid, setCheckedGrid] = useState(true);
   const [open, setOpen] = React.useState(false);
-  const predefinedFormulae = [{ a: 1, b: 1, c: 1, d: 1, e: 1, f: 1 }];
+  const predefinedFormulae = [
+    { a: 1, b: 1, c: 1, d: 1, e: 1, f: 1 },
+    { a: 1, b: 0, c: 1, d: 1, e: 0, f: -4 },
+    { a: 1, b: 7, c: -4, d: 1, e: 1, f: -2 },
+    { a: -3, b: 0, c: 4, d: 1, e: -2, f: 1 },
+  ];
   useEffect(() => {
     setCoeffs({
       a: Math.max(-rangeSliderVal, Math.min(rangeSliderVal, coeffs.a)),
@@ -161,7 +166,7 @@ function App() {
                     value={coeffs.f}
                   />
                 </div>
-                <Settings
+                {/* <Settings
                   open={open}
                   {...radioValue}
                   {...rangeSliderVal}
@@ -174,15 +179,13 @@ function App() {
                   {...setCheckedDerivative}
                   {...setCheckedGrid}
                   {...setOpen}
-                />
+                /> */}
               </div>
-              <div>
-                <FormulaButton
-                  onClick={() => {
-                    handleFormulaButton(0);
-                  }}
-                  coeffs={Array.from(Object.values(predefinedFormulae[0]))}
-                ></FormulaButton>
+              <div className="buttondiv">
+                <FormulaButton onClick={() => { handleFormulaButton(0); }} coeffs={Array.from(Object.values(predefinedFormulae[0]))} />
+                <FormulaButton onClick={() => { handleFormulaButton(1); }} coeffs={Array.from(Object.values(predefinedFormulae[1]))} />
+                <FormulaButton onClick={() => { handleFormulaButton(2); }} coeffs={Array.from(Object.values(predefinedFormulae[2]))} />
+                <FormulaButton onClick={() => { handleFormulaButton(3); }} coeffs={Array.from(Object.values(predefinedFormulae[3]))} />
               </div>
             </div>
           </div>

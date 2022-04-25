@@ -1,6 +1,7 @@
 import { Button } from '@mui/material'
 import React from 'react'
 import Latex from 'react-latex'
+import { prettifyCoeffs } from './utils'
 
 function signedCoef(coef: number, op: string) {
     if ((op === "-" && coef < 0) || (op === "+" && coef >= 0))
@@ -29,10 +30,10 @@ interface FormulaButtonProps {
 export default function FormulaButton({ coeffs, onClick }: FormulaButtonProps) {
     return (
         <div>
-            <Button onClick={onClick} variant="contained" >
+            <Button style={{ padding: '12px', margin: '5px' }} onClick={onClick} variant="contained" >
                 <Latex>
-                    {`$\\frac {${coeffs[0]}x^2 ${signedCoef(coeffs[1], '+')}x ${signedCoef(coeffs[2], '+')}}
-                              {${coeffs[3]}x^2 ${signedCoef(coeffs[4], '+')}x ${signedCoef(coeffs[5], '+')}}$`}
+                    {`$\\Large{\\frac {${prettifyCoeffs(coeffs[0], coeffs[1], coeffs[2])}}
+                              {${prettifyCoeffs(coeffs[3], coeffs[4], coeffs[5])}}}$`}
                 </Latex>
             </Button >
         </div>

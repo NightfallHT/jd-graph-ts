@@ -22,8 +22,8 @@ const solutionArray = (
     const x = (a + b) / 2;
     return (
       derivativeNumeratorA * x * x +
-        derivativeNumeratorB * x +
-        derivativeNumeratorC >
+      derivativeNumeratorB * x +
+      derivativeNumeratorC >
       0
     );
   }
@@ -40,13 +40,14 @@ const solutionArray = (
   solutionsDen.sort((a: number, b: number) => a - b);
   const solutionsDerivativeNumGenerator = () => {
     //generates solutions of the derivative analytically
+    if (derivativeNumeratorA === 0) return [-derivativeNumeratorC / derivativeNumeratorB]
     if (deltaDerivativeNum < 0) return [];
     if (deltaDerivativeNum > 0) {
       return [
         (-derivativeNumeratorB + Math.sqrt(deltaDerivativeNum)) /
-          (derivativeNumeratorA * 2),
+        (derivativeNumeratorA * 2),
         (-derivativeNumeratorB - Math.sqrt(deltaDerivativeNum)) /
-          (derivativeNumeratorA * 2),
+        (derivativeNumeratorA * 2),
       ];
     }
     return [-derivativeNumeratorB / (2 * derivativeNumeratorA)];
@@ -62,10 +63,19 @@ const solutionArray = (
 
   function rootsOfQuadratic(a: number, b: number, c: number): string[] {
     let delta = Math.pow(b, 2) - 4 * a * c;
-    if (a === 0)
-       return [`$The function is linear (a = 0) \\Rightarrow \\\\ x _0 = \\frac{c}{b}$`,
-               `$x _0 =\\frac{${round(c)}}{${round(b)}} $`,
-               `$x _0 = ${round(c/b)}$`]
+    if (a === 0 && b && c)
+      return [
+        'The function is linear (a = 0) ',
+        `$\\Rightarrow \\ x _0 = \\frac{c}{b}$`,
+        `$x _0 =-\\frac{${round(c)}}{${round(b)}} $`,
+        `$x _0 = ${round(-c / b)}$`]
+    if (a === 0 && c === 0 && b === 0)
+      return [
+        'The function is linear (a = 0) ',
+        `$\\Rightarrow \\ x _0 = \\frac{c}{b}$`,
+        `$x _0 =-\\frac{${round(c)}}{${round(b)}} $`,
+        `$x _0 \\notin \\reals $`]
+
     if (delta < 0)
       return [`$\\Delta < 0 \\Rightarrow  x _0 \\in \\varnothing$`];
     if (delta === 0)
@@ -97,6 +107,29 @@ const solutionArray = (
         )}\\}$`,
       ];
   }
+  function checkEvenness() {
+    if (a / d === b / e && b / e === c / f) return [`Your function is $\\ \\frac {${a / d}}{1}\\ $, just go away`]
+    return [
+      "$ f(x) =\\frac{ax^2 + bx + c}{dx^2 + ex + f} = \\frac{g(x)}{h(x)}$",
+      " a quadratic function is even if and only if the middle term is equal to zero, because",
+      "$ax^2 + bx + c = a(-x)^2 + b(-x) + c$",
+      " only holds if b = 0",
+      "Check whether the numerator is even:",
+      `${b === 0
+        ? "$ b = 0 \\iff g \\ is \\  even$"
+        : "$b \\neq 0 \\iff g \\ isn't \\ even$"
+      }`,
+      "Check whether the denominator is even:",
+      `${e === 0
+        ? "$e = 0 \\iff h \\ is \\  even$"
+        : "$e \\neq 0 \\iff h \\ isn't \\ even$"
+      }`,
+      `The function is ${b === 0 && e === 0
+        ? "even, because both the numerator and the denominator are even"
+        : "not even, because the numerator or the denominator or both are not even "
+      }`,
+    ]
+  }
   function limit() {
     if (deltaDen > 0) {
       return [
@@ -104,68 +137,56 @@ const solutionArray = (
         "To calculate them we need to find from which direction the zero in the denominator is approached,and what is the sign the numerator takes at where the denominator equals zero",
         `$\\lim\\limits_{x \\rightarrow ${round(
           solutionsDen[0]
-        )}^-} \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        )}^-} \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${round(solutionsDen[0])}^+} 
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d < 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${round(solutionsDen[1])}^-}
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
-            ? "+"
-            : "-"
-        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
+          ? "+"
+          : "-"
+        }}{${d < 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d < 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${round(solutionsDen[1])}^+} 
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[1], 2) + b * solutionsDen[1] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
       ];
     } else if (deltaDen === 0) {
       return [
         "The limits around the point(s) excluded from the domain:",
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^-}
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
         `$\\lim\\limits_{x \\rightarrow ${solutionsDen[0]}^+}
-        \\stackrel{[\\frac{${
-          a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
-            ? "+"
-            : "-"
-        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${
-          (a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
-            ? "\\infin"
-            : "-\\infin"
+        \\stackrel{[\\frac{${a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c > 0
+          ? "+"
+          : "-"
+        }}{${d > 0 ? "0^+" : "0^-"}}]}{=} ${(a * Math.pow(solutionsDen[0], 2) + b * solutionsDen[0] + c) * d > 0
+          ? "\\infin"
+          : "-\\infin"
         }$`,
       ];
     }
@@ -210,19 +231,15 @@ const solutionArray = (
     let outputDecreasing = "$f\\searrow";
     ranges.forEach((range) => {
       if (!derivativeSign(range.min, range.max)) return;
-      outputIncreasing += `(${
-        range.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(range.min)
-      },${
-        range.max === Number.POSITIVE_INFINITY ? "\\infty" : round(range.max)
-      } ),`;
+      outputIncreasing += `(${range.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(range.min)
+        },${range.max === Number.POSITIVE_INFINITY ? "\\infty" : round(range.max)
+        } ),`;
     });
     ranges.forEach((range) => {
       if (derivativeSign(range.min, range.max)) return;
-      outputDecreasing += `(${
-        range.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(range.min)
-      },${
-        range.max === Number.POSITIVE_INFINITY ? "\\infty" : round(range.max)
-      } ),`;
+      outputDecreasing += `(${range.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(range.min)
+        },${range.max === Number.POSITIVE_INFINITY ? "\\infty" : round(range.max)
+        } ),`;
     });
     outputIncreasing = outputIncreasing.slice(0, -1);
     outputDecreasing = outputDecreasing.slice(0, -1);
@@ -261,7 +278,10 @@ const solutionArray = (
       ) {
         maxBracket = ")";
       }
-      if (solutionsDerivativeNum.includes(range.min)) {
+      if (solutionsDen.includes(range.min)) {
+        minBracket = "(";
+        rangesParsed.push({ point: range.min, type: "discontinuity" });
+      } else if (solutionsDerivativeNum.includes(range.min)) {
         if (derivativeNumeratorA > 0) {
           if (range.min === solutionsDerivativeNum[0]) {
             rangesParsed.push({ point: range.min, type: "max" });
@@ -275,9 +295,6 @@ const solutionArray = (
             rangesParsed.push({ point: range.min, type: "max" });
           }
         }
-      } else if (solutionsDen.includes(range.min)) {
-        minBracket = "(";
-        rangesParsed.push({ point: range.min, type: "discontinuity" });
       }
       const increasing = derivativeSign(range.min, range.max);
       rangesParsed.push({
@@ -299,11 +316,9 @@ const solutionArray = (
       if (isPoint(value)) {
         output += `& ${round(value.point)}`;
       } else {
-        output += `& ${value.minBracket} ${
-          value.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(value.min)
-        }, ${
-          value.max === Number.POSITIVE_INFINITY ? "\\infty" : round(value.max)
-        } ${value.maxBracket}`;
+        output += `& ${value.minBracket} ${value.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(value.min)
+          }, ${value.max === Number.POSITIVE_INFINITY ? "\\infty" : round(value.max)
+          } ${value.maxBracket}`;
       }
     });
     output += "\\\\ \\hline \\\\ \\frac{df}{dx}& \\quad";
@@ -346,7 +361,8 @@ const solutionArray = (
       header: "Procedurally generated steps of solving the equation",
       explanation:
         "You can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
-      solution: ["WARNING: We round to 4 decimal places"],
+      solution: ["WARNING: We round to 4 decimal places"]
+
     },
     {
       header: "Step 1 - Find the domain",
@@ -402,29 +418,7 @@ const solutionArray = (
     {
       header: "Step 4 - Check for evenness of the function",
       explanation: "Check whether f(x) = f(-x) to figure out whether the graph is symmetrical along the Y axis",
-      solution: [
-        "$ f(x) =\\frac{ax^2 + bx + c}{dx^2 + ex + f} = \\frac{g(x)}{h(x)}$",
-        " a quadratic function is even if and only if the middle term is equal to zero, because",
-        "$ax^2 + bx + c = a(-x)^2 + b(-x) + c$",
-        " only holds if b = 0",
-        "Check whether the numerator is even:",
-        `${
-          b === 0
-            ? "$ b = 0 \\iff g \\ is \\  even$"
-            : "$b \\neq 0 \\iff g \\ isn't \\ even$"
-        }`,
-        "Check whether the denominator is even:",
-        `${
-          e === 0
-            ? "$e = 0 \\iff h \\ is \\  even$"
-            : "$e \\neq 0 \\iff h \\ isn't \\ even$"
-        }`,
-        `The function is ${
-          b === 0 && e === 0
-            ? "even, because both the numerator and the denominator are even"
-            : "not even, because the numerator or the denominator or both are not even "
-        }`,
-      ],
+      solution: [...checkEvenness()]
     },
     {
       header: "Step 5 - Calculate important limits",
