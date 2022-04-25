@@ -120,6 +120,9 @@ h1 {
   margin-bottom: 3rem;
 }
 
+.settings * {
+  padding: 25px;
+}
 
 .input-field {
   height: min-content;
