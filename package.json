@@ -1,8 +1,10 @@
 {
+  "homepage": "https://nightfallht.github.io/jd-graph-ts/",
   "name": "jd-graph-ts",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "-": "^0.0.1",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/material": "^5.6.1",
@@ -14,18 +16,22 @@
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
     "function-plot": "^1.22.8",
+    "gh-pages": "^3.2.3",
     "mathjs": "^10.4.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-latex": "^2.0.0",
     "react-material-ui-carousel": "^3.3.3",
     "react-scripts": "5.0.0",
+    "save-dev": "^0.0.1-security",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -b master -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
