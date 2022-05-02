@@ -361,7 +361,8 @@ const solutionArray = (
       header: "Procedurally generated steps of solving the equation",
       explanation:
         "You can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
-      solution: ["WARNING: We round to 4 decimal places"]
+      solution: ["WARNING: We round to 4 decimal places", "",
+        "also you can swipe instead of pressing the arrows. just a fancy feature."]
 
     },
     {

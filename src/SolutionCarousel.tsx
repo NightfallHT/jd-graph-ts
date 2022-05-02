@@ -13,6 +13,7 @@ export interface ItemProps {
 interface CarouselProps {
   itemArr: ItemProps[];
 }
+
 export default function SolutionCarousel(props: CarouselProps) {
   return (
     <Carousel
@@ -20,7 +21,7 @@ export default function SolutionCarousel(props: CarouselProps) {
       animation={"slide"}
       cycleNavigation={false}
       navButtonsAlwaysVisible={true}
-      height={"60vmin"}
+      height={"800px"}
     >
       {props.itemArr.map((item, i) => (
         <Item

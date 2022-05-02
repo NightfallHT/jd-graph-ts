@@ -90,7 +90,7 @@ function App() {
     functionPlot({
       target: "#x",
       width: document.getElementById("x")?.offsetWidth,
-      height,
+      height: document.getElementById("x")?.offsetWidth,
       xAxis: { domain: xScale },
       yAxis: { domain: computeYScale(width as number, height, xScale) },
       disableZoom: !checkedZoom,
@@ -137,62 +137,66 @@ function App() {
                     "+"
                   )}x${signedCoef(coeffs.f, "+")}}}$`}</Latex>
                   <div className="sliders">
-                    <InputSection
-                      step={parseFloat(radioValue)}
-                      range={[-rangeSliderVal, rangeSliderVal]}
-                      label="a"
-                      update={(a) => {
-                        setCoeffs({ ...coeffs, a });
-                      }}
-                      value={coeffs.a}
-                      cantBeZero={true}
-                    />
-                    <InputSection
-                      step={parseFloat(radioValue)}
-                      range={[-rangeSliderVal, rangeSliderVal]}
-                      label="b"
-                      update={(b) => {
-                        setCoeffs({ ...coeffs, b });
-                      }}
-                      value={coeffs.b}
-                    />
-                    <InputSection
-                      step={parseFloat(radioValue)}
-                      range={[-rangeSliderVal, rangeSliderVal]}
-                      label="c"
-                      update={(c) => {
-                        setCoeffs({ ...coeffs, c });
-                      }}
-                      value={coeffs.c}
-                    />
-                    <InputSection
-                      step={parseFloat(radioValue)}
-                      range={[-rangeSliderVal, rangeSliderVal]}
-                      label="d"
-                      update={(d) => {
-                        setCoeffs({ ...coeffs, d });
-                      }}
-                      value={coeffs.d}
-                      cantBeZero={true}
-                    />
-                    <InputSection
-                      step={parseFloat(radioValue)}
-                      range={[-rangeSliderVal, rangeSliderVal]}
-                      label="e"
-                      update={(e) => {
-                        setCoeffs({ ...coeffs, e });
-                      }}
-                      value={coeffs.e}
-                    />
-                    <InputSection
-                      step={parseFloat(radioValue)}
-                      range={[-rangeSliderVal, rangeSliderVal]}
-                      label="f"
-                      update={(f) => {
-                        setCoeffs({ ...coeffs, f });
-                      }}
-                      value={coeffs.f}
-                    />
+                    <div>
+                      <InputSection
+                        step={parseFloat(radioValue)}
+                        range={[-rangeSliderVal, rangeSliderVal]}
+                        label="a"
+                        update={(a) => {
+                          setCoeffs({ ...coeffs, a });
+                        }}
+                        value={coeffs.a}
+                        cantBeZero={true}
+                      />
+                      <InputSection
+                        step={parseFloat(radioValue)}
+                        range={[-rangeSliderVal, rangeSliderVal]}
+                        label="b"
+                        update={(b) => {
+                          setCoeffs({ ...coeffs, b });
+                        }}
+                        value={coeffs.b}
+                      />
+                      <InputSection
+                        step={parseFloat(radioValue)}
+                        range={[-rangeSliderVal, rangeSliderVal]}
+                        label="c"
+                        update={(c) => {
+                          setCoeffs({ ...coeffs, c });
+                        }}
+                        value={coeffs.c}
+                      />
+                    </div>
+                    <div>
+                      <InputSection
+                        step={parseFloat(radioValue)}
+                        range={[-rangeSliderVal, rangeSliderVal]}
+                        label="d"
+                        update={(d) => {
+                          setCoeffs({ ...coeffs, d });
+                        }}
+                        value={coeffs.d}
+                        cantBeZero={true}
+                      />
+                      <InputSection
+                        step={parseFloat(radioValue)}
+                        range={[-rangeSliderVal, rangeSliderVal]}
+                        label="e"
+                        update={(e) => {
+                          setCoeffs({ ...coeffs, e });
+                        }}
+                        value={coeffs.e}
+                      />
+                      <InputSection
+                        step={parseFloat(radioValue)}
+                        range={[-rangeSliderVal, rangeSliderVal]}
+                        label="f"
+                        update={(f) => {
+                          setCoeffs({ ...coeffs, f });
+                        }}
+                        value={coeffs.f}
+                      />
+                    </div>
                   </div>
                   <Settings
                     open={open}
