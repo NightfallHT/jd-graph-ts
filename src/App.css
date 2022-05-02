@@ -206,7 +206,7 @@ h1 {
 .sliders {
   display: flex;
   flex-direction: column;
-  gap: 45px;
+  gap: 0px;
 }
 
 .sliders-wrapper {
