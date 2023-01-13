@@ -362,7 +362,7 @@ const solutionArray = (
   }
   return [
     {
-      header: "Procedurally generated steps of solving the equation",
+      header: "h generated steps of solving the equation",
       explanation:
         "You can navigate this carousel to find the exact steps you need to take to determine the graph of the function",
       solution: ["WARNING: We round to 4 decimal places", "",
