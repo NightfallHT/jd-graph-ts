@@ -16,16 +16,16 @@ const solutionArray = (
   const deltaDerivativeNum =
     Math.pow(derivativeNumeratorB, 2) -
     4 * derivativeNumeratorA * derivativeNumeratorC;
-  function derivativeSign(a: number, b: number): boolean {
+  function derivativeSign(a: number, b: number): number {
     a = a === Number.NEGATIVE_INFINITY ? b - 1 : a;
     b = b === Number.POSITIVE_INFINITY ? a + 1 : b;
     const x = (a + b) / 2;
-    return (
-      derivativeNumeratorA * x * x +
+    const res = derivativeNumeratorA * x * x +
       derivativeNumeratorB * x +
-      derivativeNumeratorC >
-      0
-    );
+      derivativeNumeratorC 
+    if (res > 0) return 1;
+    else if (res < 0) return -1;
+    else return res;
   }
   function round(num: number) {
     return Math.round((num + Number.EPSILON) * 10000) / 10000;
@@ -229,18 +229,20 @@ const solutionArray = (
   function monotonicity(ranges: Array<{ min: number; max: number }>) {
     let outputIncreasing = "$f\\nearrow";
     let outputDecreasing = "$f\\searrow";
+    let outputConstant = (derivativeSign(range.min, range.max) === 0) ? "$function is constant$" : "";
     ranges.forEach((range) => {
-      if (!derivativeSign(range.min, range.max)) return;
+      if (derivativeSign(range.min, range.max) < 0 ) return;
       outputIncreasing += `(${range.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(range.min)
         },${range.max === Number.POSITIVE_INFINITY ? "\\infty" : round(range.max)
         } ),`;
     });
     ranges.forEach((range) => {
-      if (derivativeSign(range.min, range.max)) return;
+      if (derivativeSign(range.min, range.max) > 0) return;
       outputDecreasing += `(${range.min === Number.NEGATIVE_INFINITY ? "-\\infty" : round(range.min)
         },${range.max === Number.POSITIVE_INFINITY ? "\\infty" : round(range.max)
         } ),`;
     });
+    
     outputIncreasing = outputIncreasing.slice(0, -1);
     outputDecreasing = outputDecreasing.slice(0, -1);
 
@@ -249,7 +251,7 @@ const solutionArray = (
 
     outputIncreasing = outputIncreasing.length < 11 ? "" : outputIncreasing;
     outputDecreasing = outputDecreasing.length < 11 ? "" : outputDecreasing;
-    return [outputIncreasing, outputDecreasing];
+    return [outputIncreasing, outputDecreasing, outputConstant];
   }
   function table(ranges: Array<{ min: number; max: number }>) {
     interface point {
@@ -261,7 +263,7 @@ const solutionArray = (
       max: number;
       minBracket: "(" | "[";
       maxBracket: ")" | "]";
-      increasing: boolean;
+      increasing: number;
     }
     function isPoint(object: point | range): object is point {
       return (object as range).increasing === undefined;
@@ -330,10 +332,12 @@ const solutionArray = (
           output += "& \\times";
         }
       } else {
-        if (value.increasing) {
+        if (value.increasing > 0) {
           output += "& +";
-        } else {
+        } else if (value.increasing < 0){
           output += "& -";
+        } else {
+          output += "& 0";
         }
       }
     });
@@ -346,11 +350,11 @@ const solutionArray = (
           output += "& \\times";
         }
       } else {
-        if (value.increasing) {
+        if (value.increasing > 0) {
           output += "&\\nearrow";
-        } else {
+        } else if (value.increasing < 0) {
           output += "&\\searrow";
-        }
+        } else output += "&constant";
       }
     });
     output += "\\end{array}$";
